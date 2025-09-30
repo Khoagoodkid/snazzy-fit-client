@@ -1,0 +1,26 @@
+name: Next Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /root/services/snazzy-fit
+            git fetch origin
+            git checkout main
+            git pull origin main
+            docker build -t snazzy-fit .
+            docker stop snazzy-fit-container || true
+            docker rm snazzy-fit-container || true
+            docker run -d --name snazzy-fit-container -p 4000:3000 snazzy-fit
