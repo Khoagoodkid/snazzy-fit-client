@@ -16,7 +16,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /root/services/snazzy-fit
+            cd /root/services/snazzy-fit-client
             git fetch origin
             git checkout main
             git pull origin main
