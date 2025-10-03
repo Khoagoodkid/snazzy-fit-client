@@ -5,10 +5,46 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
+  build:
+    name: Build and test
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy using ssh
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci -f
+      - name: Run tests
+        run: npm run test
+      
+  deploy:
+    name: Deploy to production
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+  
+      - name: Pull latest code and build docker image 
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            echo "Pulling latest code"
+            cd /root/services/snazzy-fit-client
+            git fetch origin 
+            git checkout main
+            git pull origin main
+
+            echo "Building docker image..."
+            # Tag the latest image as previous for rollback
+            docker tag snazzy-fit:latest snazzy-fit:previous || true 
+
+            docker build -t snazzy-fit:latest .
+
+      - name: Run docker container
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -16,11 +52,39 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /root/services/snazzy-fit-client
-            git fetch origin
-            git checkout main
-            git pull origin main
-            docker build -t snazzy-fit .
+            echo "Running docker container..."
             docker stop snazzy-fit-container || true
             docker rm snazzy-fit-container || true
-            docker run -d --name snazzy-fit-container -p 4000:3000 snazzy-fit
+            docker run -d --name snazzy-fit-container -p 4000:3000 snazzy-fit:latest
+      
+      - name: Rollback if failed
+        if: failure() # Only run if deployment failed
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            echo "Deploy failed, rolling back to previous version..."
+            docker stop snazzy-fit-container || true
+            docker rm snazzy-fit-container || true
+            if docker image inspect snazzy-fit:previous > /dev/null 2>&1; then
+              docker run -d --name snazzy-fit-container -p 4000:3000 snazzy-fit:previous
+            else
+              echo "No previous image found, rollback skipped."
+            fi
+      
+      - name: Clean up 
+        if: success() # Only run if deployment was successful
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker image prune -f
+
+            
+ 

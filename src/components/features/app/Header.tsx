@@ -1,3 +1,10 @@
+import {
+    Search,
+    Heart,
+    ShoppingCart,
+    User,
+} from "lucide-react"
+
 export default function Header() {
     return (
         <header className="w-full bg-white">
@@ -15,10 +22,10 @@ export default function Header() {
                     <a href="#" className="hover:text-green-900">Blog</a>
                 </nav>
                 <div className="flex gap-4 items-center text-gray-700">
-                    <button className="hover:text-green-900">🔍</button>
-                    <button className="hover:text-green-900">❤️</button>
-                    <button className="hover:text-green-900">🛒</button>
-                    <button className="hover:text-green-900">👤</button>
+                    <button className="hover:text-green-900"><Search /></button>
+                    <button className="hover:text-green-900"><Heart /></button>
+                    <button className="hover:text-green-900"><ShoppingCart /></button>
+                    <button className="hover:text-green-900"><User /></button>
                 </div>
             </div>
         </header>
