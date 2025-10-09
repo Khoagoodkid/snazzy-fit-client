@@ -21,7 +21,7 @@ export const useAuthService = () => {
 
             // Dispatch the action to update the Redux store
             dispatch(setCredentials({
-                user: response.data.data as User,
+                user: response.data ,
             }));
             return response.data;
         } catch (error) {
@@ -68,7 +68,7 @@ export const useAuthService = () => {
     const getMe = async () => {
         setIsLoading(true);
         try {
-            const response = await privateAxios.get<User>("/api/auth/me");
+            const response = await privateAxios.get("/api/auth/me");
             return response.data;
         } catch (error) {
             throw error as Error;

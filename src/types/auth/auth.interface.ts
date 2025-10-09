@@ -27,4 +27,5 @@ export interface ChangePasswordRequestFormData {
 export interface ResetPasswordFormData {
     password: string;
     confirmPassword: string;
+    token: string;
 }
