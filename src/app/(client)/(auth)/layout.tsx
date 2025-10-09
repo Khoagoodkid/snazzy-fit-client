@@ -10,9 +10,9 @@ import { redirect } from "next/navigation";
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
 
     const { user } = useAppSelector((state: RootState) => state.auth);
-    if (user) {
-        redirect("/");
-    }
+    // if (user) {
+    //     redirect("/");
+    // }
     return (
         <Page
             isShowHeader={false}

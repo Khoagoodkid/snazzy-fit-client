@@ -1,7 +1,11 @@
+import CategoriesDropdown from "./CategoriesDropdown"
+
+
 export interface HeaderItem {
     id: string,
-    label: string
-    href: string | null
+    label: string,
+    href: string | null,
+    dropdown?: React.ReactNode
 }
 
 export const headerItems: HeaderItem[] = [
@@ -18,7 +22,8 @@ export const headerItems: HeaderItem[] = [
     {
         id: "categories",
         label: "Categories",
-        href: "/categories"
+        href: null,
+        dropdown: <CategoriesDropdown />
     },
     {
         id: "about-us",
@@ -36,3 +41,5 @@ export const headerItems: HeaderItem[] = [
         href: "/blog"
     }
 ]
+
+

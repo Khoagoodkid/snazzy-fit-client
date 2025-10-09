@@ -38,6 +38,9 @@ jobs:
             git checkout main
             git pull origin main
 
+            echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" > .env 
+            echo "NEXT_PUBLIC_REDUX_ENCRYPTION_KEY=${{ secrets.NEXT_PUBLIC_REDUX_ENCRYPTION_KEY }}" >> .env 
+
             echo "Building docker image..."
             # Tag the latest image as previous for rollback
             docker tag snazzy-fit:latest snazzy-fit:previous || true 

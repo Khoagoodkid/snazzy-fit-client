@@ -42,6 +42,7 @@ export const resetPasswordSchema = z
   .object({
     password: passwordSchema,
     confirmPassword: passwordSchema,
+    token: z.string().min(1, { message: "Token is required" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password does not match",
@@ -51,3 +52,9 @@ export const resetPasswordSchema = z
 export const forgotPasswordSchema = z.object({
   email: z.string().email({ message: "Email is not valid" }),
 });
+
+
+export const changePasswordRequestSchema = z.object({
+  email: z.string().email({ message: "Email is not valid" }),
+});
+

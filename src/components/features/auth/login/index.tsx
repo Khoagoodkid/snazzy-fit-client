@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 import ErrorMessage from "@/components/ui/errorMessage"
 import { loginSchema } from "@/lib/scheme/authScheme"
+import { BASE_URL } from "@/config/config"
 // Zod schema for login validation
 
 
@@ -89,7 +90,7 @@ export default function LoginPage() {
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                             Password
                         </label>
-                        <a href="#" className="text-sm text-blue-600 hover:text-blue-500">
+                        <a href="/change-password" className="text-sm text-blue-600 hover:text-blue-500">
                             Forgot password?
                         </a>
                     </div>
@@ -140,6 +141,9 @@ export default function LoginPage() {
             <div>
                 <Button
                     type="button"
+                    onClick={() => {
+                        window.location.href = BASE_URL + "/api/auth/google"
+                    }}
                     className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                     {/* Google Logo */}

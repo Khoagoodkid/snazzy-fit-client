@@ -35,10 +35,13 @@ const alertSlice = createSlice({
             state.onConfirm = action.payload.onConfirm;
         },
         closeAlert: (state) => {
+            state.open = false;
             revertAll();
         },
         confirmAction: (state) => {
             state.onConfirm?.();
+            state.onConfirm = null;
+            state.open = false;
             revertAll();
         }
     },

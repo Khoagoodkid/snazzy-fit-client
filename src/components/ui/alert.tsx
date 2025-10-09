@@ -37,19 +37,19 @@ export default function Alert() {
   const btnColors = {
     success: "var(--success)",
     error: "var(--error)",
-    warning: "var(--remove-btn)",
+    warning: "var(--warning)",
     info: "var(--info)",
   };
 
   return (
     <Dialog open={open} onOpenChange={() => dispatch(closeAlert())}>
-      <DialogContent className="bg-[var(--alert-modal-bg)] text-[var(--text-primary)] p-7 max-w-[544px] border border-[var(--input-border)]">
+      <DialogContent className="bg-white text-black p-7 max-w-[544px] border border-gray-300  ">
         <DialogHeader>
           <div className="flex flex-row gap-4">
             <div>{icons[type]}</div>
             <div className="flex flex-col">
               <DialogTitle className="font-bold text-lg">{title}</DialogTitle>
-              <DialogDescription className="text-[var(--text-secondary)]">
+              <DialogDescription className="text-gray-500">
                 {message}
               </DialogDescription>
             </div>
@@ -57,13 +57,13 @@ export default function Alert() {
         </DialogHeader>
         <DialogFooter className="flex flex-row justify-end gap-3">
           <Button
-            className="py-6 px-5 border border-[var(--input-border)] text-white bg-[#161B26] rounded-md font-bold text-md"
+            className="py-5 px-5 text-black hover:bg-gray-100 bg-transparent rounded-md font-bold text-md"
             onClick={() => dispatch(closeAlert())}
           >
             Cancel
           </Button>
           <Button
-            className="py-6 px-5 border border-[var(--input-border)] text-white rounded-md font-bold text-md hover:opacity-[0.9]"
+            className="py-5 px-5  text-black rounded-md font-bold text-md hover:opacity-[0.9]"
             style={{ background: btnColors[type] }}
             onClick={() => dispatch(confirmAction())}
           >

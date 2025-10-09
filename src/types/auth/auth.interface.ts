@@ -19,3 +19,12 @@ export interface SignupRequest {
 export interface SignupResponse extends ApiResponse {
     data: User;
 }
+
+export interface ChangePasswordRequestFormData {
+    email: string;
+}
+
+export interface ResetPasswordFormData {
+    password: string;
+    confirmPassword: string;
+}

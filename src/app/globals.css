@@ -12,6 +12,36 @@ body {
   scroll-behavior: smooth;
 }
 
+/* Srollbar */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 5px;
+}
+
+/* Light theme scrollbar styles */
+::-webkit-scrollbar-track {
+  background: #e5e7eb; /* Matches --background-message for consistency */
+  border-radius: 10px;
+  width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    45deg,
+    var(--green-primary),
+    var(--green-primary)
+  ); /* Subtle gray gradient */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    45deg,
+    var(--green-primary),
+    var(--green-primary)
+  ); /* Darker gray gradient on hover */
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -87,7 +117,12 @@ body {
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-
+  --yellow-primary: #ffbb35;
+  --green-primary: #14532d;
+  --success: #14532d;
+  --error: #b91c1c;
+  --warning: #f59e0b;
+  --info: #3b82f6;
 }
 
 .dark {
@@ -122,6 +157,11 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --success: #14532d;
+  --error: #b91c1c;
+  --warning: #f59e0b;
+  --info: #3b82f6;
 }
 
 @layer base {
