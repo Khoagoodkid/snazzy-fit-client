@@ -20,3 +20,7 @@ export interface GetCartResponse {
 export interface UpdateCartRequest {
     quantity: number;
 }
+export interface AddToCartRequest {
+    variantId: string;
+    quantity: number;
+}

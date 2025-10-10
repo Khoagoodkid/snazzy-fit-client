@@ -14,13 +14,17 @@ import { useAuthService } from "@/services/client/auth/useAuthService"
 import { useRouter } from "next/navigation"
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger, NavigationMenuContent } from "@/components/ui/navigation-menu"
 import { motion } from "framer-motion"
+import { useSelector } from "react-redux"
+import { RootState } from "@/lib/store"
+import { Button } from "@/components/ui/button"
+import SearchDialog from "../search-dialog/SearchDialog"
 
 export default function Header() {
 
     const [hoveredItem, setHoveredItem] = useState<HeaderItem | null>(null)
     const { logout } = useAuthService()
     const router = useRouter();
-
+    const { user } = useSelector((state: RootState) => state.auth);
     const handleLogout = async () => {
         try {
             await logout();
@@ -39,7 +43,7 @@ export default function Header() {
                     <span className="font-bold text-lg text-green-900">SnazzyFit.</span>
                 </div>
                 <nav className="hidden md:flex gap-8 text-gray-700 text-md">
-                    
+
                     <NavigationMenu>
                         <NavigationMenuList className="gap-7">
                             {headerItems.map((item: HeaderItem) => {
@@ -79,13 +83,45 @@ export default function Header() {
                     </NavigationMenu>
                 </nav>
                 <div className="flex gap-4 items-center text-gray-700">
-                    <button className="hover:text-green-900"><Search /></button>
-                    <button className="hover:text-green-900"><Heart /></button>
-                    <button className="hover:text-green-900"><ShoppingCart /></button>
-                    <button className="hover:text-green-900"><User /></button>
-                    <button className="hover:text-green-900"
-                        onClick={() => handleLogout()}
-                    ><LogOut /></button>
+                    <SearchDialog>
+                        <Search className="hover:fill-current cursor-pointer" />
+                    </SearchDialog>
+                    {user && (
+                        <>
+                            <button className="hover:text-green-900 cursor-pointer"><Heart className="hover:fill-current" /></button>
+                            <button className="hover:text-green-900 cursor-pointer"
+                                onClick={() => router.push("/shopping-cart")}
+                            ><ShoppingCart className="hover:fill-current" /></button>
+                            <button className="hover:text-green-900 cursor-pointer"
+                                onClick={() => router.push("/profile")}
+                            ><User className="hover:fill-current" /></button>
+
+                            <button className="hover:text-green-900 cursor-pointer"
+                                onClick={() => handleLogout()}
+                            ><LogOut className="hover:fill-current" /></button>
+                        </>
+                    )}
+
+                    {
+                        !user && (
+                            <>
+                                <Button
+                                    variant="outline"
+                                    className="border-none shadow-none hover:bg-transparent hover:text-green-900"
+                                    onClick={() => router.push("/login")}
+                                >
+                                    Login
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    className="hover:text-green-900 border-green-900 text-green-900 hover:bg-green-900 hover:text-white"
+                                    onClick={() => router.push("/signup")}
+                                >
+                                    Signup
+                                </Button>
+                            </>
+                        )
+                    }
                 </div>
             </div>
         </header >

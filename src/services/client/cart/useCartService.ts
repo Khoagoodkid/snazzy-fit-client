@@ -1,6 +1,6 @@
 import { privateAxios } from "@/middleware/axiosInstance";
 import { useCallback, useState } from "react";
-import { GetCartResponse, UpdateCartRequest } from "@/types/cart/cart.interface";
+import { AddToCartRequest, GetCartResponse, UpdateCartRequest } from "@/types/cart/cart.interface";
 
 
 export const useCartService = () => {
@@ -42,11 +42,24 @@ export const useCartService = () => {
         }
     }, []);
 
+    const addToCart = useCallback(async (addToCartRequest: AddToCartRequest) => {
+        setIsLoading(true);
+        try {
+            const response = await privateAxios.post(`/api/cart/add-to-cart`, addToCartRequest);
+            return response.data;
+        } catch (error) {
+            throw error as Error;
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
     return {
         isLoading,
         getCart,
         removeCart,
         updateCart,
+        addToCart,
     }
 }
 

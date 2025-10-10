@@ -18,6 +18,7 @@ import { X, ShoppingCartIcon, Star, Search } from "lucide-react"
 import BreadcrumbComponent from "../app/Breadcrumb"
 import useCollectionService from "@/services/client/collection/useCollectionService";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 
 
@@ -103,6 +104,10 @@ export default function CollectionProducts() {
     const fetchProducts = useCallback(async () => {
         console.log(priceFrom, priceTo);
         if (!collectionId) {
+            return;
+        }
+
+        if (categoryName && !categoryId) {
             return;
         }
         try {
@@ -238,9 +243,15 @@ export default function CollectionProducts() {
         setFilters((prev) => ({ ...prev, keyword: searchTerm }));
     }, [searchTerm]);
 
+    const handleProductClick = useCallback((categoryName: string, slug: string) => {
+        const formatedCategoryName = categoryName[0].toLowerCase() + categoryName.slice(1);
+        router.push(`/collections/${collectionName}/${formatedCategoryName}/${slug}`);
+
+    }, [collectionName, router]);
+
 
     return (
-        <Page>
+        <Page className="">
             <div className="flex gap-8 p-6 max-w-screen mx-auto">
                 {/* Left Sidebar - Filter Options */}
                 <div className="w-80 space-y-6 sticky top-6 self-start">
@@ -390,11 +401,17 @@ export default function CollectionProducts() {
                     {/* Product Grid */}
                     <div className="grid grid-cols-3 gap-4  mb-8 ">
                         {products.map((product, index) => (
-                            <div key={index} className="overflow-hidden space-y-2 hover:bg-gray-100 transition-all duration-300 p-3 rounded-xl">
+                            <div key={index}
+                                onClick={() => handleProductClick(product.category.name, product.slug)}
+                                className="overflow-hidden space-y-2 hover:bg-gray-100 transition-all duration-300 p-3 rounded-xl cursor-pointer">
                                 <div className="relative">
-                                    <div className="w-full h-80 bg-gray-200 flex items-center justify-center rounded-xl">
-                                        <span className="text-gray-400">Product Image</span>
-                                    </div>
+                                    <Image
+                                        src={product.mainImage || ""}
+                                        alt={product.name}
+                                        className="w-full h-80 object-cover rounded-xl"
+                                        width={320}
+                                        height={320}
+                                    />
                                     <div className="absolute top-2 left-2">
                                         <span className="bg-green-900 text-white px-3 py-1 rounded-full text-sm font-medium">
                                             {product.discount}% off

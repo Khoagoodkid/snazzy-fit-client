@@ -20,8 +20,8 @@ export const headerItems: HeaderItem[] = [
         href: "/shop"
     },
     {
-        id: "categories",
-        label: "Categories",
+        id: "collections",
+        label: "Collections",
         href: null,
         dropdown: <CategoriesDropdown />
     },

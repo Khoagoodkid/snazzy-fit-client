@@ -21,9 +21,11 @@ export default function PromotionalCardsSection() {
                   </Button>
                 </div>
                 <div className="ml-6">
-                  <div className="w-48 h-48 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <span className="text-gray-500">Summer Collection Image</span>
-                  </div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1523359346063-d879354c0ea5?auto=format&fit=crop&w=200&q=80" 
+                    alt="Summer Collection"
+                    className="w-48 h-48 object-cover rounded-lg"
+                  />
                 </div>
               </div>
             </CardContent>
@@ -44,9 +46,11 @@ export default function PromotionalCardsSection() {
                   </Button>
                 </div>
                 <div className="ml-6">
-                  <div className="w-48 h-48 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <span className="text-gray-500">Formal Wear Image</span>
-                  </div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=200&q=80" 
+                    alt="Formal Wear Collection"
+                    className="w-48 h-48 object-cover rounded-lg"
+                  />
                 </div>
               </div>
             </CardContent>

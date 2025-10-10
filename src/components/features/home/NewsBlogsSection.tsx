@@ -23,9 +23,11 @@ export default function NewsBlogsSection() {
           {/* Blog Post 1 */}
           <Card className="bg-white rounded-xl overflow-hidden shadow-sm">
             <CardContent className="p-0">
-              <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">Fashion Trends Image</span>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1483985028355-82c1d93eea48?auto=format&fit=crop&w=400&q=80" 
+                alt="Fashion Trends 2024"
+                className="w-full h-48 object-cover"
+              />
               <div className="p-6">
                 <span className="inline-block bg-yellow-500 text-white text-xs px-2 py-1 rounded mb-3">15 April 2024</span>
                 <h3 className="font-bold text-gray-800 mb-3">Fashion Trends 2024: What's Hot and What's Not</h3>
@@ -40,9 +42,11 @@ export default function NewsBlogsSection() {
           {/* Blog Post 2 */}
           <Card className="bg-white rounded-xl overflow-hidden shadow-sm">
             <CardContent className="p-0">
-              <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">Style Guide Image</span>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=400&q=80" 
+                alt="Complete Style Guide"
+                className="w-full h-48 object-cover"
+              />
               <div className="p-6">
                 <span className="inline-block bg-yellow-500 text-white text-xs px-2 py-1 rounded mb-3">12 April 2024</span>
                 <h3 className="font-bold text-gray-800 mb-3">Complete Style Guide for Every Season</h3>
@@ -57,9 +61,11 @@ export default function NewsBlogsSection() {
           {/* Blog Post 3 */}
           <Card className="bg-white rounded-xl overflow-hidden shadow-sm">
             <CardContent className="p-0">
-              <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">Wardrobe Tips Image</span>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=400&q=80" 
+                alt="Capsule Wardrobe Tips"
+                className="w-full h-48 object-cover"
+              />
               <div className="p-6">
                 <span className="inline-block bg-yellow-500 text-white text-xs px-2 py-1 rounded mb-3">10 April 2024</span>
                 <h3 className="font-bold text-gray-800 mb-3">How to Build a Capsule Wardrobe</h3>

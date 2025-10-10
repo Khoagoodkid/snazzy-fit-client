@@ -47,9 +47,11 @@ export default function HeroSection() {
           <Card className="min-w-[280px] flex-shrink-0">
             <CardContent className="p-0">
               <div className="relative w-full h-64">
-                <div className="w-full h-full bg-gray-200 rounded-t-xl flex items-center justify-center">
-                  <span className="text-gray-500">Men's Collection Image</span>
-                </div>
+                <img 
+                  src="https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=400&q=80" 
+                  alt="Men's Collection"
+                  className="w-full h-full object-cover rounded-t-xl"
+                />
                 <span className="absolute top-3 right-3 bg-white text-sm px-2 py-1 rounded shadow-sm">$89</span>
                 <button className="absolute top-3 right-12 bg-green-800 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">
                   ×
@@ -66,9 +68,11 @@ export default function HeroSection() {
           <Card className="min-w-[280px] flex-shrink-0">
             <CardContent className="p-0">
               <div className="relative w-full h-64">
-                <div className="w-full h-full bg-gray-200 rounded-t-xl flex items-center justify-center">
-                  <span className="text-gray-500">Women's Collection Image</span>
-                </div>
+                <img 
+                  src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80" 
+                  alt="Women's Collection"
+                  className="w-full h-full object-cover rounded-t-xl"
+                />
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-gray-800">Women's Collection</h3>

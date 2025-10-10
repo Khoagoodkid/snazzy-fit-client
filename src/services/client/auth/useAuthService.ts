@@ -59,7 +59,7 @@ export const useAuthService = () => {
             await privateAxios.post("/api/auth/logout");
             dispatch(logOutAndRevertAll());
         } catch (error) {
-            throw error as Error;
+            
         } finally {
             setIsLoading(false);
         }

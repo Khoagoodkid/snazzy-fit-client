@@ -25,9 +25,11 @@ export default function CategoriesSection() {
               </div>
             </div>
             <div className="ml-6">
-              <div className="w-48 h-48 bg-gray-200 rounded-lg flex items-center justify-center">
-                <span className="text-gray-500">Tops Image</span>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=200&q=80" 
+                alt="Tops Collection"
+                className="w-48 h-48 object-cover rounded-lg"
+              />
             </div>
           </div>
         </Card>
@@ -46,9 +48,11 @@ export default function CategoriesSection() {
               </div>
             </div>
             <div className="ml-4">
-              <div className="w-24 h-32 bg-gray-200 rounded-lg flex items-center justify-center">
-                <span className="text-gray-500 text-xs">Bottoms Image</span>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=120&q=80" 
+                alt="Bottoms Collection"
+                className="w-24 h-32 object-cover rounded-lg"
+              />
             </div>
           </div>
         </Card>
@@ -67,9 +71,11 @@ export default function CategoriesSection() {
               </div>
             </div>
             <div className="ml-4">
-              <div className="w-24 h-32 bg-gray-200 rounded-lg flex items-center justify-center">
-                <span className="text-gray-500 text-xs">Accessories Image</span>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=120&q=80" 
+                alt="Accessories Collection"
+                className="w-24 h-32 object-cover rounded-lg"
+              />
             </div>
           </div>
         </Card>

@@ -51,8 +51,10 @@ const generateBreadcrumb = (pathname: string) => {
     let currrentPath = "";
 
     segments.forEach((segment, index) => {
+        const segmentName = segment.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+
         currrentPath = currrentPath + "/" + segment;
-        breadcrumbItems.push({ label: segment.charAt(0).toUpperCase() + segment.slice(1), href: currrentPath });
+        breadcrumbItems.push({ label: segmentName, href: currrentPath });
     });
 
     return breadcrumbItems;

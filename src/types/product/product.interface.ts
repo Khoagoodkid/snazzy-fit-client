@@ -1,5 +1,6 @@
 import { ApiResponse } from "../base.interface";
 import { Category } from "../categories/categories.interface";
+import { Collection } from "../collection/collection.interface";
 
 
 export interface GetProductsQuery {
@@ -21,6 +22,10 @@ export interface GetProductsResponse extends ApiResponse {
 
 }
 
+export interface GetProductBySlugResponse extends ApiResponse {
+    data: Product;
+}
+
 export interface Product {
     id: string;
     name: string;
@@ -28,6 +33,9 @@ export interface Product {
     description: string;
     brand: string;
     category: Category;
+    category_id: string;
+    collection_id: string;
+    collection: Collection;
     gender: string;
     basePrice: number;
     discount: number;
@@ -47,6 +55,7 @@ export interface Product {
 export interface Variant {
     id: string;
     color: string;
+    color_code: string;
     size: string;
     stock: number;
     price: number;

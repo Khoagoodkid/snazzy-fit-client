@@ -19,9 +19,11 @@ export default function DealsSection() {
           <Card className="bg-white rounded-xl overflow-hidden">
             <CardContent className="p-0">
               <div className="relative">
-                <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500">T-Shirt Image</span>
-                </div>
+                <img 
+                  src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=80" 
+                  alt="Premium Cotton T-Shirt"
+                  className="w-full h-48 object-cover"
+                />
                 <span className="absolute top-3 left-3 bg-green-600 text-white text-xs px-2 py-1 rounded">20% off</span>
                 <div className="absolute top-3 right-3 flex gap-2">
                   <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm">
@@ -55,9 +57,11 @@ export default function DealsSection() {
           <Card className="bg-white rounded-xl overflow-hidden">
             <CardContent className="p-0">
               <div className="relative">
-                <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500">Jeans Image</span>
-                </div>
+                <img 
+                  src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=400&q=80" 
+                  alt="Classic Blue Jeans"
+                  className="w-full h-48 object-cover"
+                />
                 <span className="absolute top-3 left-3 bg-green-600 text-white text-xs px-2 py-1 rounded">20% off</span>
                 <div className="absolute top-3 right-3 flex gap-2">
                   <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm">
@@ -91,9 +95,11 @@ export default function DealsSection() {
           <Card className="bg-white rounded-xl overflow-hidden">
             <CardContent className="p-0">
               <div className="relative">
-                <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500">Hoodie Image</span>
-                </div>
+                <img 
+                  src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=400&q=80" 
+                  alt="Cozy Winter Hoodie"
+                  className="w-full h-48 object-cover"
+                />
                 <span className="absolute top-3 left-3 bg-green-600 text-white text-xs px-2 py-1 rounded">20% off</span>
                 <div className="absolute top-3 right-3 flex gap-2">
                   <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm">
