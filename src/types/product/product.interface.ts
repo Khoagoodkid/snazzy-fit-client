@@ -61,5 +61,5 @@ export interface Variant {
     price: number;
     images: string[];
     product?: Product;
-    productId: string;
+    product_id: string;
 }

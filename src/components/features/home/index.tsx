@@ -1,3 +1,5 @@
+"use client"
+
 import Page from "@/components/features/app/Page"
 import HeroSection from "./HeroSection"
 import FeaturesSection from "./FeaturesSection"

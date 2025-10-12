@@ -6,6 +6,7 @@ import {
     ShoppingCart,
     User,
     LogOut,
+    Ticket as TicketIcon,
 } from "lucide-react"
 import { headerItems } from "./HeaderItems"
 import { HeaderItem } from "./HeaderItems"
@@ -39,12 +40,12 @@ export default function Header() {
         <header className="w-full bg-white">
             <div className="max-w-screen mx-auto flex items-center justify-between px-6 py-4">
                 <div className="flex items-center gap-2">
-                    <div className="bg-green-600 text-white rounded-sm p-2 font-bold text-sm">F</div>
+                    <div className="bg-green-600 text-white rounded-sm p-2 font-bold text-sm">S</div>
                     <span className="font-bold text-lg text-green-900">SnazzyFit.</span>
                 </div>
                 <nav className="hidden md:flex gap-8 text-gray-700 text-md">
 
-                    <NavigationMenu>
+                    <NavigationMenu> {/* TODO: Add customer support link */}
                         <NavigationMenuList className="gap-7">
                             {headerItems.map((item: HeaderItem) => {
                                 return (
@@ -95,6 +96,10 @@ export default function Header() {
                             <button className="hover:text-green-900 cursor-pointer"
                                 onClick={() => router.push("/profile")}
                             ><User className="hover:fill-current" /></button>
+                            <button className="hover:text-green-900 cursor-pointer"
+                                onClick={() => router.push("/customer-service")}
+                            ><TicketIcon className="hover:fill-current" />
+                            </button>
 
                             <button className="hover:text-green-900 cursor-pointer"
                                 onClick={() => handleLogout()}

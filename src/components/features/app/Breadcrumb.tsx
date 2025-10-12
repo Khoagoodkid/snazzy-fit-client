@@ -6,7 +6,6 @@ import React from "react"
 
 export default function BreadcrumbComponent() {
     const breadcrumbItems = generateBreadcrumb(window.location.pathname);
-    console.log(breadcrumbItems);
     return (
         <Breadcrumb>
             <BreadcrumbList className="text-sm text-gray-500">

@@ -11,7 +11,9 @@ import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { Product } from "@/types/product/product.interface";
 import useCartService from "@/services/client/cart/useCartService";
-
+import { handleEncodeData } from "@/utils/handleEncodeData";
+import { useRouter } from "next/navigation";
+import ProductReviewSection from "./ProductReviewSection";
 // Mock data for the product
 const mockProduct = {
     id: "1",
@@ -79,13 +81,13 @@ const mockRelatedProducts = [
 
 export default function ProductDetail() {
     const [selectedImage, setSelectedImage] = useState(0);
-    const [quantity, setQuantity] = useState(4);
+    const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState("description");
     const [product, setProduct] = useState<Product | null>(null);
     const [selectedColor, setSelectedColor] = useState<number>(0);
     const [selectedSize, setSelectedSize] = useState<number>(0);
+    const router = useRouter();
 
-    const currentPrice = (product?.basePrice || 0) - ((product?.basePrice || 0) * (product?.discount || 0) / 100);
 
     const renderStars = (rating: number) => {
         return Array.from({ length: 5 }, (_, i) => (
@@ -112,11 +114,11 @@ export default function ProductDetail() {
 
     const handleSelectColor = useCallback((index: number) => {
         setSelectedColor(index);
-        
+
         const isSizeAvailable = product?.variants?.some((variant) => variant.color === colors[index]?.color && variant.size === sizes[selectedSize]);
 
         console.log("isSizeAvailable", isSizeAvailable);
-        if(!isSizeAvailable) {
+        if (!isSizeAvailable) {
             const availableSize = product?.variants?.find((variant) => variant.color === colors[index]?.color)?.size;
             setSelectedSize(sizes.indexOf(availableSize || "") || 0);
         }
@@ -125,7 +127,7 @@ export default function ProductDetail() {
     useEffect(() => {
         handleGetProductDetail();
     }, [handleGetProductDetail]);
-    
+
 
 
     const colors = useMemo(() => {
@@ -149,7 +151,7 @@ export default function ProductDetail() {
 
     const handleAddToCart = useCallback(() => {
         try {
-            if(selectedVariant) {
+            if (selectedVariant) {
                 addToCart({ variantId: selectedVariant.id, quantity: quantity });
                 toast.success("Product added to cart");
             }
@@ -158,14 +160,50 @@ export default function ProductDetail() {
         }
     }, [selectedVariant, quantity, addToCart]);
 
+
+    useEffect(() => {
+        setQuantity((prev) => Math.min(prev, selectedVariant?.stock || 1));
+    }, [selectedVariant]);
+
+
+    const handleBuyNow = useCallback(() => {
+
+        const unit_price = (selectedVariant?.price || 0) * (1 - (product?.discount || 0) / 100) || 0;
+        const shipping = 2;
+        const subtotal = unit_price * quantity || 0;
+        const tax = subtotal * 0.1;
+        const total = subtotal + tax + shipping;
+        const checkoutData = {
+            items: [{
+                variant_id: selectedVariant?.id,
+                quantity: quantity,
+                unit_price: unit_price,
+                total_price: unit_price * quantity,
+            }],
+            shipping: shipping,
+            totalItems: quantity,
+            subtotal: subtotal,
+            tax: tax,
+            total: total,
+        }
+        const encodedData = handleEncodeData(checkoutData)
+        router.push(`/checkout?data=${encodedData}`)
+    }, [selectedVariant, quantity, router]);
+
     if (!product) return null;
     return (
-        <Page className="bg-gray-50">
-            <div className="container mx-auto px-4 py-8 max-w-7xl">
-                <BreadcrumbComponent />
+        <Page className="bg-gradient-to-br from-lime-50/30 via-emerald-50/20 to-teal-50/30">
+            <div className="relative">
+                {/* Decorative Blobs */}
+                <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-lime-200/30 to-emerald-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-emerald-200/30 to-teal-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute bottom-1/4 right-1/3 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-full blur-3xl opacity-50 -z-10" />
 
-                {/* Product Display Section */}
-                <div className="bg-white rounded-lg shadow-sm p-8 mb-8 mt-8" >
+                <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
+                    <BreadcrumbComponent />
+
+                    {/* Product Display Section */}
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8 mt-8 border border-gray-100" >
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Left Side - Product Images */}
                         <div className="space-y-4">
@@ -201,7 +239,7 @@ export default function ProductDetail() {
                                     <button
                                         key={index}
                                         onClick={() => setSelectedImage(index)}
-                                        className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${selectedImage === index ? 'border-green-500' : 'border-gray-200'
+                                        className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${selectedImage === index ? 'border-emerald-500 shadow-lg' : 'border-gray-200 hover:border-emerald-300'
                                             }`}
                                     >
                                         <img
@@ -223,7 +261,7 @@ export default function ProductDetail() {
                             <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
 
                             {/* Stock Status */}
-                            <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-800 text-sm">
+                            <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-800 text-sm font-semibold border border-emerald-200">
                                 In Stock
                             </div>
 
@@ -240,10 +278,10 @@ export default function ProductDetail() {
                             {/* Price */}
                             <div className="flex items-center gap-3">
                                 <span className="text-2xl font-bold text-gray-900">
-                                    ${currentPrice.toFixed(2)}
+                                    ${(selectedVariant?.price ? (selectedVariant?.price * (1 - (product.discount || 0) / 100)) : 0).toFixed(2) || 0}
                                 </span>
                                 <span className="text-lg text-gray-500 line-through">
-                                    ${product.basePrice?.toFixed(2) || 0}
+                                    ${selectedVariant?.price?.toFixed(2) || 0}
                                 </span>
                             </div>
 
@@ -322,15 +360,15 @@ export default function ProductDetail() {
 
                             {/* Action Buttons */}
                             <div className="flex items-center gap-4">
-                                <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3" onClick={handleAddToCart}>
+                                <Button className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all font-semibold" onClick={handleAddToCart}>
                                     <ShoppingCart className="w-4 h-4 mr-2" />
                                     Add To Cart
                                 </Button>
-                                <Button variant="outline" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-8 py-3">
+                                <Button className="bg-gradient-to-r from-lime-500 to-emerald-500 hover:from-lime-600 hover:to-emerald-600 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all font-semibold" onClick={handleBuyNow}>
                                     Buy Now
                                 </Button>
-                                <Button variant="outline" size="icon" className="w-12 h-12">
-                                    <Heart className="w-5 h-5" />
+                                <Button variant="outline" size="icon" className="w-12 h-12 border-2 border-gray-200 hover:border-emerald-500 hover:bg-emerald-50 rounded-xl transition-all">
+                                    <Heart className="w-5 h-5 text-gray-600 hover:text-emerald-600" />
                                 </Button>
                             </div>
 
@@ -350,7 +388,7 @@ export default function ProductDetail() {
                                             key={social}
                                             variant="outline"
                                             size="icon"
-                                            className="w-8 h-8 bg-green-600 hover:bg-green-700 text-white border-green-600"
+                                            className="w-8 h-8 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all"
                                         >
                                             <Share2 className="w-4 h-4" />
                                         </Button>
@@ -361,28 +399,28 @@ export default function ProductDetail() {
                     </div>
                 </div>
 
-                {/* Product Information Tabs */}
-                <div className="bg-white rounded-lg shadow-sm mb-8">
-                    <div className="border-b border-gray-200">
-                        <nav className="flex space-x-8 px-8">
-                            {[
-                                { id: 'description', label: 'Description' },
-                                { id: 'additional', label: 'Additional Information' },
-                                { id: 'review', label: 'Review' }
-                            ].map((tab) => (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab.id
-                                        ? 'border-green-500 text-green-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        }`}
-                                >
-                                    {tab.label}
-                                </button>
-                            ))}
-                        </nav>
-                    </div>
+                    {/* Product Information Tabs */}
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl mb-8 border border-gray-100">
+                        <div className="border-b border-gray-200">
+                            <nav className="flex space-x-8 px-8">
+                                {[
+                                    { id: 'description', label: 'Description' },
+                                    { id: 'additional', label: 'Additional Information' },
+                                    { id: 'review', label: 'Review' }
+                                ].map((tab) => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setActiveTab(tab.id)}
+                                        className={`py-4 px-1 border-b-2 font-semibold text-sm transition-all ${activeTab === tab.id
+                                            ? 'border-emerald-500 text-emerald-600'
+                                            : 'border-transparent text-gray-500 hover:text-emerald-600 hover:border-emerald-300'
+                                            }`}
+                                    >
+                                        {tab.label}
+                                    </button>
+                                ))}
+                            </nav>
+                        </div>
 
                     <div className="p-8">
                         {activeTab === 'description' && (
@@ -401,7 +439,7 @@ export default function ProductDetail() {
                                         'Duis aute irure dolor in reprehenderit in voluptate velit'
                                     ].map((item, index) => (
                                         <li key={index} className="flex items-start gap-2">
-                                            <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                                            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 flex-shrink-0" />
                                             <span className="text-gray-600">{item}</span>
                                         </li>
                                     ))}
@@ -415,65 +453,71 @@ export default function ProductDetail() {
                             </div>
                         )}
 
-                        {activeTab === 'review' && (
-                            <div className="space-y-4">
-                                <p className="text-gray-600">Customer reviews will be displayed here.</p>
-                            </div>
+                        {activeTab === 'review' && product && (
+                            <ProductReviewSection productId={product.id} />
                         )}
                     </div>
                 </div>
 
-                {/* Related Products Section */}
-                <div className="bg-white rounded-lg shadow-sm p-8">
-                    <div className="text-center mb-8">
-                        <p className="text-gray-500 text-sm mb-2">Related Products</p>
-                        <h2 className="text-2xl font-bold text-green-600">Explore Related Products</h2>
-                    </div>
+                    {/* Related Products Section */}
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-100">
+                        <div className="text-center mb-8">
+                            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-800 to-slate-700 text-white px-4 py-2 rounded-full font-bold text-sm mb-4 shadow-lg">
+                                Related Products
+                            </div>
+                            <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                                <span className="bg-gradient-to-r from-lime-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                                    Explore Related Products
+                                </span>
+                            </h2>
+                        </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {mockRelatedProducts.map((relatedProduct) => (
-                            <Card key={relatedProduct.id} className="group hover:shadow-lg transition-shadow">
-                                <CardHeader className="relative p-0">
-                                    <div className="relative">
-                                        <img
-                                            src={relatedProduct.image}
-                                            alt={relatedProduct.name}
-                                            className="w-full h-48 object-cover rounded-t-lg"
-                                        />
-                                        <div className="absolute top-2 left-2 bg-green-600 text-white px-2 py-1 rounded text-xs font-medium">
-                                            {relatedProduct.discount}% off
-                                        </div>
-                                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <div className="flex gap-1">
-                                                <Button variant="outline" size="icon" className="w-8 h-8 bg-white">
-                                                    <Heart className="w-4 h-4" />
-                                                </Button>
-                                                <Button variant="outline" size="icon" className="w-8 h-8 bg-white">
-                                                    <Share2 className="w-4 h-4" />
-                                                </Button>
-                                                <Button variant="outline" size="icon" className="w-8 h-8 bg-white">
-                                                    <ShoppingCart className="w-4 h-4" />
-                                                </Button>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {mockRelatedProducts.map((relatedProduct) => (
+                                <Card key={relatedProduct.id} className="group hover:shadow-2xl transition-all duration-300 rounded-2xl overflow-hidden border-0 bg-white">
+                                    <CardHeader className="relative p-0">
+                                        <div className="relative overflow-hidden">
+                                            <img
+                                                src={relatedProduct.image}
+                                                alt={relatedProduct.name}
+                                                className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                            <div className="absolute top-3 left-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                                                {relatedProduct.discount}% off
+                                            </div>
+                                            <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <div className="flex gap-1">
+                                                    <Button variant="outline" size="icon" className="w-8 h-8 bg-white/90 backdrop-blur-sm hover:bg-white rounded-lg shadow-lg">
+                                                        <Heart className="w-4 h-4" />
+                                                    </Button>
+                                                    <Button variant="outline" size="icon" className="w-8 h-8 bg-white/90 backdrop-blur-sm hover:bg-white rounded-lg shadow-lg">
+                                                        <Share2 className="w-4 h-4" />
+                                                    </Button>
+                                                    <Button variant="outline" size="icon" className="w-8 h-8 bg-white/90 backdrop-blur-sm hover:bg-white rounded-lg shadow-lg">
+                                                        <ShoppingCart className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </CardHeader>
-                                <CardContent className="p-4">
-                                    <h3 className="font-semibold text-gray-900 mb-2">{relatedProduct.name}</h3>
-                                    <div className="flex items-center gap-1 mb-2">
-                                        {renderStars(relatedProduct.rating)}
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-lg font-bold text-gray-900">
-                                            ${(relatedProduct.price - (relatedProduct.price * relatedProduct.discount / 100)).toFixed(2)}
-                                        </span>
-                                        <span className="text-sm text-gray-500 line-through">
-                                            ${relatedProduct.price.toFixed(2)}
-                                        </span>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
+                                    </CardHeader>
+                                    <CardContent className="p-5">
+                                        <h3 className="font-bold text-slate-900 mb-2 text-lg group-hover:text-emerald-600 transition-colors">{relatedProduct.name}</h3>
+                                        <div className="flex items-center gap-1 mb-3">
+                                            {renderStars(relatedProduct.rating)}
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xl font-bold text-slate-900">
+                                                ${(relatedProduct.price - (relatedProduct.price * relatedProduct.discount / 100)).toFixed(2)}
+                                            </span>
+                                            <span className="text-sm text-gray-400 line-through">
+                                                ${relatedProduct.price.toFixed(2)}
+                                            </span>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

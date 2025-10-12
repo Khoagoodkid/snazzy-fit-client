@@ -12,14 +12,19 @@ import { useAppDispatch } from "@/lib/hooks";
 import { showAlert } from "@/lib/features/alert/alertSlice";
 import { useDebounce, } from "@/hooks/useDebounce";
 import { Checkbox } from "@/components/ui/checkbox";
+import { handleEncodeData } from "@/utils/handleEncodeData";
+import { useRouter } from "next/navigation";
+import { getProductUrl } from "@/utils/handleGetProductUrl";
 
 
 export default function ShoppingCartPage() {
+    const { getCart, removeCart, updateCart } = useCartService();
+    const router = useRouter();
+    const dispatch = useAppDispatch();
+
+
     const [items, setItems] = useState<CartItemType[]>([])
     const [selectedItems, setSelectedItems] = useState<CartItemType[]>([]);
-
-    const { getCart, removeCart, updateCart } = useCartService();
-    const dispatch = useAppDispatch();
 
     const totalItems = useMemo(() => {
         return selectedItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -28,7 +33,8 @@ export default function ShoppingCartPage() {
         return selectedItems.reduce((sum, item) => sum + ((item.variant?.product?.basePrice || 0) * (1 - (item.variant?.product?.discount || 0) / 100)) * item.quantity, 0);
     }, [selectedItems]);
     const tax = subtotal * 0.1;
-    const total = subtotal + tax;
+    const shipping = 2;
+    const total = subtotal + tax + shipping;
 
     const handleGetCart = useCallback(async () => {
         try {
@@ -66,25 +72,45 @@ export default function ShoppingCartPage() {
     const handleUpdateCart = useCallback(async (item: CartItemType, quantity: number) => {
         try {
             const response = await updateCart(item.id, { quantity: quantity });
-            setItems((prev) => prev.map((item) => item.id === item.id ? { ...item, quantity: response.data.quantity } : item));
+            setItems((prev) => prev.map((i) => i.id === item.id ? { ...i, quantity: response.data.quantity } : i));
 
             setSelectedItems((prev) => prev.map((i) => i.id === item.id ? { ...i, quantity: response.data.quantity } : i));
         } catch (error) {
             toast.error((error as Error).message);
         }
     }, [updateCart]);
-    
+
 
     const handleSelectItem = useCallback((item: CartItemType) => {
         setSelectedItems((prev) => [...prev, item]);
     }, []);
 
     const handleRemoveSelectedItem = useCallback((item: CartItemType) => {
-        setSelectedItems((prev) => prev.filter((item) => item.id !== item.id));
+        setSelectedItems((prev) => prev.filter((i) => i.id !== item.id));
     }, []);
 
+    const handleCheckout = useCallback(() => {
+        const checkoutData = {
+            items: selectedItems.map((item) => ({
+                id: item.id,
+                variant_id: item.variant_id,
+                quantity: item.quantity,
+                unit_price: ((item.variant?.product?.basePrice || 0) * (1 - (item.variant?.product?.discount || 0) / 100)) || 0,
+                total_price: ((item.variant?.product?.basePrice || 0) * (1 - (item.variant?.product?.discount || 0) / 100)) * item.quantity || 0,
+                product: item.variant?.product,
+            })),
+            shipping: shipping,
+            totalItems: totalItems,
+            subtotal: subtotal,
+            tax: tax,
+            total: total,
+        }
+        const encodedData = handleEncodeData(checkoutData)
+        router.push(`/checkout?data=${encodedData}`)
+    }, [selectedItems, totalItems, subtotal, tax, total]);
+
     return (
-        <Page>
+        <Page className="bg-gray-50">
             {/* Page Title Section */}
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <BreadcrumbComponent />
@@ -138,13 +164,13 @@ export default function ShoppingCartPage() {
                                 </div>
                                 <div className="flex justify-between text-gray-700">
                                     <span>Shipping:</span>
-                                    <span>$00.00</span>
+                                    <span>${shipping.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-gray-700">
                                     <span>Taxes:</span>
                                     <span>${tax.toFixed(2)}</span>
                                 </div>
-                              
+
                             </div>
 
                             <div className="border-t border-gray-300 pt-4 mb-6">
@@ -154,9 +180,14 @@ export default function ShoppingCartPage() {
                                 </div>
                             </div>
 
-                            <button className="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700">
+                            <Button
+                                onClick={() => {
+                                    handleCheckout()
+                                }}
+                                disabled={selectedItems.length === 0}
+                                className="w-full bg-green-600 text-white h-12 rounded-lg font-medium hover:bg-green-700">
                                 Proceed to Checkout
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -206,11 +237,21 @@ interface CartItemProps {
 const CartItem = ({ item, index, items, onRemoveCart, onSelectItem, isSelected, onRemoveSelectedItem, onUpdateCart }: CartItemProps) => {
     const [quantity, setQuantity] = useState(item.quantity);
     const debouncedQuantity = useDebounce(quantity, 500);
+    const router = useRouter();
+    useEffect(() => {
+        setQuantity(item.quantity);
+    }, [item.quantity]);
 
     useEffect(() => {
-        
+        if(!debouncedQuantity) return;
         onUpdateCart(item, debouncedQuantity);
     }, [debouncedQuantity]);
+
+
+    const handleRedirectToProduct = useCallback(() => {
+        console.log("1", item);
+        router.push(getProductUrl(item.variant?.product || null));
+    }, [item.variant?.product]);
 
     return (
         <div key={item.id} className={`relative flex flex-row gap-4 p-4 items-center justify-between ${index !== items.length - 1 ? 'border-b border-gray-200' : ''}`}>
@@ -227,13 +268,15 @@ const CartItem = ({ item, index, items, onRemoveCart, onSelectItem, isSelected, 
                     </div>
                     <div className="flex flex-col justify-between flex-1">
                         <div className="space-y-2">
-                            <h3 className="font-semibold text-gray-800">{item.variant?.product?.name}</h3>
+                            <h3 className="font-semibold text-gray-800 cursor-pointer hover:text-green-600"
+                                onClick={() => { handleRedirectToProduct() }}
+                            >{item.variant?.product?.name}</h3>
                             <p className="text-gray-500 text-sm">{item.variant?.product?.brand}</p>
                             <p className="text-gray-500 text-sm">Color : <span className="font-medium text-black">{item.variant?.color}</span> | Size : <span className="font-medium text-black">{item.variant?.size}</span></p>
                         </div>
                         <div className="flex items-center gap-2">
-                            <span className="line-through text-gray-500 text-sm">${item.variant?.product?.basePrice.toFixed(2)}</span>
-                            <span className="text-black text-xl font-bold">${((item.variant?.product?.basePrice || 0) * (1 - (item.variant?.product?.discount || 0) / 100)).toFixed(2)}</span>
+                            <span className="line-through text-gray-500 text-sm">${item.variant?.price.toFixed(2)}</span>
+                            <span className="text-black text-xl font-bold">${((item.variant?.price || 0) * (1 - (item.variant?.product?.discount || 0) / 100)).toFixed(2)}</span>
                             <span className="text-red-500 text-md font-bold">{item.variant?.product?.discount}% OFF</span>
                         </div>
                     </div>

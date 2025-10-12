@@ -21,7 +21,7 @@ export const useAuthService = () => {
 
             // Dispatch the action to update the Redux store
             dispatch(setCredentials({
-                user: response.data ,
+                user: response.data.data ,
             }));
             return response.data;
         } catch (error) {

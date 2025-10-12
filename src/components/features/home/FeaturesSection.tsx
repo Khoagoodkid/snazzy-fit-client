@@ -1,31 +1,47 @@
 import { Package, Wallet, Headphones } from "lucide-react"
+import { motion } from "framer-motion"
 
 export default function FeaturesSection() {
   return (
-    <section className="bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 px-6 text-center">
-        <div>
-          <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-800">
-            <Package className="w-8 h-8 text-green-800" />
+    <motion.section 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6 }}
+      className="relative bg-gradient-to-br from-violet-50/40 via-fuchsia-50/30 to-pink-50/40 py-20 overflow-hidden"
+    >
+      {/* Decorative Blobs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-violet-200 to-purple-200 rounded-full blur-3xl opacity-20" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-pink-200 to-rose-200 rounded-full blur-3xl opacity-20" />
+      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 px-6 relative z-10">
+        <div className="group hover:scale-105 transition-transform duration-300">
+          <div className="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all">
+            <div className="w-20 h-20 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg group-hover:shadow-xl group-hover:rotate-6 transition-all">
+              <Package className="w-10 h-10 text-white" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-lg mb-2">Free Shipping</h4>
+            <p className="text-gray-600">Free shipping for order above $180</p>
           </div>
-          <h4 className="font-bold text-gray-800 mb-2">Free Shipping</h4>
-          <p className="text-sm text-gray-600">Free shipping for order above $180</p>
         </div>
-        <div>
-          <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-800">
-            <Wallet className="w-8 h-8 text-green-800" />
+        <div className="group hover:scale-105 transition-transform duration-300">
+          <div className="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all">
+            <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-green-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg group-hover:shadow-xl group-hover:rotate-6 transition-all">
+              <Wallet className="w-10 h-10 text-white" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-lg mb-2">Flexible Payment</h4>
+            <p className="text-gray-600">Multiple secure payment options</p>
           </div>
-          <h4 className="font-bold text-gray-800 mb-2">Flexible Payment</h4>
-          <p className="text-sm text-gray-600">Multiple secure payment options</p>
         </div>
-        <div>
-          <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-800">
-            <Headphones className="w-8 h-8 text-green-800" />
+        <div className="group hover:scale-105 transition-transform duration-300">
+          <div className="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all">
+            <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg group-hover:shadow-xl group-hover:rotate-6 transition-all">
+              <Headphones className="w-10 h-10 text-white" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-lg mb-2">24/7 Support</h4>
+            <p className="text-gray-600">We support online all days</p>
           </div>
-          <h4 className="font-bold text-gray-800 mb-2">24x7 Support</h4>
-          <p className="text-sm text-gray-600">We support online all days.</p>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
