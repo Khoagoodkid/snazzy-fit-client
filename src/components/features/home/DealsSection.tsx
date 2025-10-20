@@ -9,22 +9,22 @@ export default function DealsSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6 }}
-      className="relative bg-gradient-to-br from-blue-50/30 via-indigo-50/20 to-purple-50/30 py-20 overflow-hidden"
+      className="relative bg-gradient-to-br from-blue-50/30 via-indigo-50/20 to-purple-50/30 py-12 sm:py-16 md:py-20 overflow-hidden"
     >
       {/* Soft Background Blobs */}
-      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-br from-blue-200/40 to-indigo-200/40 rounded-full blur-3xl opacity-40 -z-10" />
-      <div className="absolute bottom-1/4 left-0 w-[450px] h-[450px] bg-gradient-to-br from-purple-200/40 to-pink-200/40 rounded-full blur-3xl opacity-40 -z-10" />
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+      <div className="absolute top-1/4 right-0 w-64 sm:w-80 md:w-[400px] h-64 sm:h-80 md:h-[400px] bg-gradient-to-br from-blue-200/40 to-indigo-200/40 rounded-full blur-3xl opacity-40 -z-10" />
+      <div className="absolute bottom-1/4 left-0 w-80 sm:w-96 md:w-[450px] h-80 sm:h-96 md:h-[450px] bg-gradient-to-br from-purple-200/40 to-pink-200/40 rounded-full blur-3xl opacity-40 -z-10" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-4">
           <div>
             <span className="inline-block px-3 py-1 bg-cyan-100 text-cyan-800 font-bold text-xs rounded-full mb-3">Today's Specials</span>
-            <h2 className="text-4xl font-bold text-slate-900">Deals of the Day</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">Deals of the Day</h2>
           </div>
-          <p className="text-gray-600 max-w-md">
+          <p className="text-gray-600 text-sm sm:text-base max-w-md">
             Discover amazing deals on trending fashion items. Limited stock available - grab them while they last!
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {/* Product Card 1 */}
           <Card className="group hover:shadow-2xl transition-all duration-300 rounded-2xl overflow-hidden border-0">
             <CardContent className="p-0">

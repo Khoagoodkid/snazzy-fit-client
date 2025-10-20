@@ -274,12 +274,12 @@ export default function CollectionProducts() {
 
 
     return (
-        <Page className="bg-gradient-to-br from-lime-50/30 via-emerald-50/20 to-teal-50/30">
+        <Page className="bg-gradient-to-br from-cyan-50/30 via-teal-50/20 to-emerald-50/30">
             <div className="relative">
                 {/* Decorative Blobs */}
-                <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-lime-200/30 to-emerald-200/30 rounded-full blur-3xl opacity-50 -z-10" />
-                <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-emerald-200/30 to-teal-200/30 rounded-full blur-3xl opacity-50 -z-10" />
-                <div className="absolute bottom-1/4 right-1/3 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-cyan-200/30 to-teal-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-teal-200/30 to-emerald-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute bottom-1/4 right-1/3 w-[450px] h-[450px] bg-gradient-to-br from-emerald-200/30 to-green-200/30 rounded-full blur-3xl opacity-50 -z-10" />
 
                 <div className="flex gap-8 p-6 max-w-screen mx-auto relative z-10">
                     {/* Left Sidebar - Filter Options */}
@@ -444,7 +444,7 @@ export default function CollectionProducts() {
                                             width={320}
                                             height={320}
                                             className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-                                            fallbackClassName="w-full h-80 bg-gradient-to-br from-lime-100 to-emerald-100"
+                                            fallbackClassName="w-full h-80 bg-gradient-to-br from-cyan-100 to-teal-100"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         
@@ -561,9 +561,9 @@ const ActiveFilters = ({
             <div className="flex items-center gap-2">
                 {activeFilters.map((filter) => (
                     Array.isArray(filter.value) && filter.value.map((value, index) => (
-                        <div key={index} className="text-sm bg-gradient-to-r from-lime-100 to-emerald-100 px-4 py-2 rounded-full text-slate-700 font-semibold flex items-center gap-2 border border-emerald-200 shadow-sm">
+                        <div key={index} className="text-sm bg-gradient-to-r from-cyan-100 to-teal-100 px-4 py-2 rounded-full text-slate-700 font-semibold flex items-center gap-2 border border-teal-200 shadow-sm">
                             <label>{value}</label>
-                            <X className="w-4 h-4 text-emerald-600 cursor-pointer hover:text-emerald-800 transition-colors" onClick={(e) => {
+                            <X className="w-4 h-4 text-teal-600 cursor-pointer hover:text-teal-800 transition-colors" onClick={(e) => {
                                 e.stopPropagation();
                                 console.log(value, filter.label);
                                 handleRemoveActiveFilter(value, filter.label as "seasons" | "styles" | "category" | "price");
@@ -572,7 +572,7 @@ const ActiveFilters = ({
                     ))
                 ))}
             </div>
-            <Button variant="link" className="text-emerald-600 hover:text-emerald-800 p-0 h-auto font-semibold" onClick={onClearAll}>
+            <Button variant="link" className="text-teal-600 hover:text-teal-800 p-0 h-auto font-semibold" onClick={onClearAll}>
                 Clear All
             </Button>
         </div>

@@ -18,7 +18,8 @@ export default function TicketCard({ ticket, onEdit, onDelete, onView }: TicketC
     const router = useRouter()
 
     const handleChatClick = () => {
-        router.push(`/customer-service/${ticket.id}/session/session-123`)
+        if (ticket.sessions?.length === 0) return
+        router.push(`/customer-service/${ticket.id}/session/${ticket.sessions?.[0]?.id}`)
     }
 
     const getStatusColor = (status: TicketStatus) => {
@@ -165,13 +166,17 @@ export default function TicketCard({ ticket, onEdit, onDelete, onView }: TicketC
                     <Eye className="w-4 h-4 mr-2" />
                     Details
                 </Button>
-                <Button
-                    onClick={handleChatClick}
-                    className="flex-1 bg-green-600 hover:bg-green-700 text-white"
-                >
-                    <MessageSquare className="w-4 h-4 mr-2" />
-                    Chat
-                </Button>
+                {
+                    ticket.sessions && ticket.sessions.length > 0 && (
+                        <Button
+                            onClick={handleChatClick}
+                            className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                        >
+                            <MessageSquare className="w-4 h-4 mr-2" />
+                            Chat
+                        </Button>
+                    )
+                }
             </div>
         </div>
     )

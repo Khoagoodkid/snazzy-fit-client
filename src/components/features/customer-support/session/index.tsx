@@ -7,29 +7,45 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft, MessageSquare, Loader2 } from "lucide-react"
 import { useRouter, useParams } from "next/navigation"
 import { toast } from "react-toastify"
-import MessageDisplay from "./MessageDisplay"
+import { MessageRole } from "@/types/session/session.interface"
+import { formatDateAndTime } from "@/utils/handleConvertTimestamp"
 import MessageInput from "./MessageInput"
 import SessionSidebar from "./SessionSidebar"
-import { mockMessages, Message } from "./mockData"
 import { useCustomerSupport } from "@/services/client/customer-support/useCustomerSupport"
 import { Ticket } from "@/types/customer-support/customer-support.interface"
+import { useLiveChatContext } from "@/app/LiveChatProvider"
+import MessageDisplay from "./MessageDisplay"
 
 export default function CustomerServiceSessionPage() {
     const router = useRouter()
     const params = useParams()
+    const sessionId = params.sessionId as string
     const ticketId = params.id as string
-    
+
+
+    const {
+        messages,
+        handleSendMessage: onSendMessage,
+        selectedSession,
+        handleSelectSession: onSelectSession,
+    } = useLiveChatContext()
     const { getTicketById } = useCustomerSupport()
     const [ticket, setTicket] = useState<Ticket | null>(null)
     const [isLoadingTicket, setIsLoadingTicket] = useState(true)
-    const [messages, setMessages] = useState<Message[]>(mockMessages)
     const [isLoading, setIsLoading] = useState(false)
     const messagesEndRef = useRef<HTMLDivElement>(null)
+    const messageContainerRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (sessionId) {
+            onSelectSession(sessionId)
+        }
+    }, [sessionId])
 
     // Fetch ticket details
     const handleGetTicket = useCallback(async () => {
         if (!ticketId) return
-        
+
         setIsLoadingTicket(true)
         try {
             const response = await getTicketById(ticketId)
@@ -52,42 +68,25 @@ export default function CustomerServiceSessionPage() {
 
     // Scroll to bottom when messages change
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+        if (messagesEndRef.current && messageContainerRef.current) {
+            messageContainerRef.current.scrollTo({
+              top: messagesEndRef.current.offsetTop,
+              behavior: 'smooth',
+            });
+          }
     }, [messages])
 
     // Handle send message
     const handleSendMessage = async (message: string, files?: File[]) => {
         setIsLoading(true)
 
-        // Simulate API delay
-        setTimeout(() => {
-            const newMessage: Message = {
-                id: `msg-${Date.now()}`,
-                ticket_id: "ticket-123",
-                sender_id: "user-1",
-                sender_type: "USER",
-                message: message,
-                images: files ? files.map(() => "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center") : undefined,
-                created_at: new Date().toISOString(),
-            }
+        onSendMessage({
+            content: message,
+            files: files || [],
+            sessionId: sessionId
+        })        
 
-            setMessages(prev => [...prev, newMessage])
-            setIsLoading(false)
-            toast.success("Message sent!")
-
-            // Simulate admin reply after 2 seconds
-            setTimeout(() => {
-                const adminReply: Message = {
-                    id: `msg-${Date.now() + 1}`,
-                    ticket_id: "ticket-123",
-                    sender_id: "admin-1",
-                    sender_type: "ADMIN",
-                    message: "Thank you for your message. I'll look into this right away!",
-                    created_at: new Date().toISOString(),
-                }
-                setMessages(prev => [...prev, adminReply])
-            }, 2000)
-        }, 1000)
+        setIsLoading(false)
     }
 
     // Handle go back
@@ -163,7 +162,7 @@ export default function CustomerServiceSessionPage() {
 
                     {/* Right Side - Chat (2/3 width) */}
                     <div className="lg:col-span-2">
-                        <div className="bg-white rounded-lg shadow-lg flex flex-col" style={{ height: 'calc(100vh - 200px)' }}>
+                        <div className="bg-white rounded-lg shadow-lg flex flex-col h-[calc(100vh-100px)]">
                             {/* Chat Header */}
                             <div className="border-b border-gray-200 p-4 bg-gradient-to-r from-green-600 to-green-700">
                                 <div className="flex items-center gap-3">
@@ -174,15 +173,17 @@ export default function CustomerServiceSessionPage() {
                                         <h2 className="text-lg font-semibold text-white">Live Chat Support</h2>
                                         <div className="flex items-center gap-2">
                                             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                                            <p className="text-sm text-green-100">Support Agent Sarah is online</p>
+                                            <p className="text-sm text-green-100">Support {selectedSession?.assistant?.name} is online</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Messages Container */}
-                            <div className="flex-1 overflow-hidden flex flex-col">
-                                <MessageDisplay messages={messages} />
+                            <div 
+                            ref={messageContainerRef}
+                            className="flex-1 overflow-y-auto p-6 space-y-4">
+                               <MessageDisplay messages={messages} />
                                 <div ref={messagesEndRef} />
                             </div>
 
@@ -195,7 +196,7 @@ export default function CustomerServiceSessionPage() {
                 {/* Help Text */}
                 <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                     <p className="text-sm text-yellow-800">
-                        <strong>Note:</strong> This is a mock chat interface using sample data. In production, messages will be sent to and received from the support team in real-time.
+                        <strong>Note:</strong> This is a live chat support interface. Messages will be sent to and received from the support team in real-time.
                     </p>
                 </div>
             </div>

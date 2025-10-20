@@ -1,6 +1,7 @@
 import { ApiResponse } from "../base.interface";
 import { Order } from "../order/order.interface";
 import { User } from "../user/user.interface";
+import { Session } from "../session/session.interface";
 
 export enum TicketStatus {
     PENDING = "PENDING",
@@ -27,6 +28,7 @@ export interface Ticket {
     type: TicketType;
     status: TicketStatus;
     images: string[];
+    sessions?: Session[];
     created_at: string;
     updated_at: string;
 }
@@ -67,5 +69,9 @@ export interface UpdateTicketResponse extends ApiResponse {
 }
 
 export interface DeleteTicketResponse extends ApiResponse {
+    data: Ticket;
+}
+
+export interface MarkTicketAsResolvedResponse extends ApiResponse {
     data: Ticket;
 }

@@ -94,7 +94,7 @@ export default function CategoriesDropdown() {
                                     <li key={category.id}>
                                         <span
                                             onClick={() => router.push(path)}
-                                            className="hover:text-gray-900 cursor-pointer"
+                                            className="hover:text-gray-900 hover:font-semibold cursor-pointer"
                                         >
                                             {category.name}
                                         </span>

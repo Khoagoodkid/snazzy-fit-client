@@ -10,48 +10,48 @@ export default function HeroSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6 }}
-      className="relative max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center overflow-hidden"
+      className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center overflow-hidden"
     >
       {/* Decorative Background Elements */}
-      <div className="absolute top-10 right-10 w-96 h-96 bg-gradient-to-br from-cyan-300 to-teal-300 rounded-full blur-3xl opacity-30 -z-10 animate-pulse" />
-      <div className="absolute bottom-10 left-10 w-[500px] h-[500px] bg-gradient-to-br from-emerald-300 to-green-300 rounded-full blur-3xl opacity-30 -z-10 animate-pulse" style={{ animationDelay: "1s" }} />
+      <div className="absolute top-10 right-10 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-gradient-to-br from-cyan-300 to-teal-300 rounded-full blur-3xl opacity-30 -z-10 animate-pulse" />
+      <div className="absolute bottom-10 left-10 w-80 sm:w-96 md:w-[500px] h-80 sm:h-96 md:h-[500px] bg-gradient-to-br from-emerald-300 to-green-300 rounded-full blur-3xl opacity-30 -z-10 animate-pulse" style={{ animationDelay: "1s" }} />
 
-      <div>
-        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-800 to-slate-700 text-white px-4 py-2 rounded-full text-xs font-semibold mb-6 shadow-lg">
-          <Sparkles className="w-4 h-4" />
-          <span>The Best Online Fashion Store</span>
+      <div className="order-2 md:order-1">
+        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-800 to-slate-700 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold mb-4 sm:mb-6 shadow-lg">
+          <Sparkles className="w-3 sm:w-4 h-3 sm:h-4" />
+          <span className="text-xs sm:text-sm">The Best Online Fashion Store</span>
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-slate-900 leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-4 sm:mb-6">
           Explore Our Modern
           <span className="block bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
             Fashion Collection
           </span>
         </h1>
-        <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+        <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
           Discover the latest trends in fashion with our curated collection of stylish clothing for every occasion.
         </p>
-        <div className="flex gap-4 mb-8">
-          <Button className="bg-gradient-to-r from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 text-white rounded-full px-8 py-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <Button className="bg-gradient-to-r from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 text-white rounded-full px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all">
             Shop Now →
           </Button>
-          <Button variant="outline" className="text-slate-700 border-slate-300 hover:bg-slate-50 rounded-full px-8 py-6 text-base font-semibold">
+          <Button variant="outline" className="text-slate-700 border-slate-300 hover:bg-slate-50 rounded-full px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-semibold">
             View All Products
           </Button>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
           <div className="flex -space-x-2">
             {[1, 2, 3, 4, 5].map(i => (
-              <div key={i} className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-teal-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white shadow-md">
+              <div key={i} className="w-8 sm:w-10 h-8 sm:h-10 bg-gradient-to-br from-cyan-400 to-teal-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white shadow-md">
                 {i}
               </div>
             ))}
-            <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full border-2 border-white flex items-center justify-center text-white text-sm font-bold shadow-md">
+            <div className="w-8 sm:w-10 h-8 sm:h-10 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full border-2 border-white flex items-center justify-center text-white text-xs sm:text-sm font-bold shadow-md">
               +
             </div>
           </div>
           <div className="text-sm text-slate-700">
             <div className="font-bold flex items-center gap-1">
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <Star className="w-3 sm:w-4 h-3 sm:h-4 fill-amber-400 text-amber-400" />
               4.9 Ratings
             </div>
             <div className="text-xs text-gray-500">Trusted by 50k+ Customers</div>
@@ -59,10 +59,10 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="relative">
-        <div className="flex gap-6 overflow-x-auto pb-4">
+      <div className="relative order-1 md:order-2">
+        <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 scrollbar-hide">
           {/* Men's Collection Card */}
-          <Card className="min-w-[300px] flex-shrink-0 group hover:shadow-2xl transition-all duration-300 border-0 overflow-hidden">
+          <Card className="min-w-[280px] sm:min-w-[300px] flex-shrink-0 group hover:shadow-2xl transition-all duration-300 border-0 overflow-hidden">
             <CardContent className="p-0">
               <div className="relative w-full h-72 overflow-hidden">
                 <img 
@@ -104,11 +104,11 @@ export default function HeroSection() {
         </div>
 
         {/* Carousel Navigation */}
-        <div className="flex justify-center gap-3 mt-6">
-          <button className="w-12 h-12 bg-slate-800 hover:bg-slate-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all">
+        <div className="flex justify-center gap-2 sm:gap-3 mt-4 sm:mt-6">
+          <button className="w-10 sm:w-12 h-10 sm:h-12 bg-slate-800 hover:bg-slate-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all text-lg sm:text-xl">
             ←
           </button>
-          <button className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all">
+          <button className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all text-lg sm:text-xl">
             →
           </button>
         </div>

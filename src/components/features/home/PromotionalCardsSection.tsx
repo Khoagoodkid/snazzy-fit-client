@@ -10,13 +10,13 @@ export default function PromotionalCardsSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6 }}
-      className="relative bg-gradient-to-br from-rose-50/30 via-pink-50/20 to-fuchsia-50/30 py-20 overflow-hidden"
+      className="relative bg-gradient-to-br from-rose-50/30 via-pink-50/20 to-fuchsia-50/30 py-12 sm:py-16 md:py-20 overflow-hidden"
     >
       {/* Vibrant Soft Blobs */}
-      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-rose-200/30 to-pink-200/30 rounded-full blur-3xl opacity-50" />
-      <div className="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] bg-gradient-to-br from-fuchsia-200/30 to-purple-200/30 rounded-full blur-3xl opacity-50" />
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-8">
+      <div className="absolute top-1/3 left-1/4 w-80 sm:w-96 md:w-[500px] h-80 sm:h-96 md:h-[500px] bg-gradient-to-br from-rose-200/30 to-pink-200/30 rounded-full blur-3xl opacity-50" />
+      <div className="absolute bottom-1/3 right-1/4 w-64 sm:w-80 md:w-[450px] h-64 sm:h-80 md:h-[450px] bg-gradient-to-br from-fuchsia-200/30 to-purple-200/30 rounded-full blur-3xl opacity-50" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {/* Left Promotional Card */}
           <Card className="relative bg-gradient-to-br from-cyan-500 to-teal-600 rounded-2xl overflow-hidden border-0 shadow-2xl group">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyek0zNCAzMGgtMnYtMmgydjJ6bTAtNGgtMnYtMmgydjJ6bTAtNGgtMnYtMmgydjJ6bTAtNGgtMnYtMmgydjJ6bTAtNGgtMnYtMmgydjJ6bTAtNGgtMnYtMmgydjJ6bTAtNGgtMnYtMmgydjJ6bTAtNGgtMnYtMmgydjJ6bTAtNGgtMnYtMmgydjJ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20" />

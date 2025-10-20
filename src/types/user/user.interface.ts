@@ -1,10 +1,11 @@
 import { ApiResponse } from "../base.interface"
+import { Role } from "../role-permission/role.interface"
 
 export interface User {
     id: string
     name: string
     email: string
-    role: string
+    role: Role
     phone: string
     gender: string
     provider: string
@@ -29,4 +30,8 @@ export interface UpdatePasswordRequest {
 
 export interface UpdatePasswordResponse extends ApiResponse {
     data: User
+}
+
+export interface GetAllUsersForAdminResponse extends ApiResponse {
+    data: User[]
 }

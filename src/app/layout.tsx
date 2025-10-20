@@ -4,7 +4,7 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import { ToastContainer } from "react-toastify";
 import Alert from "@/components/ui/alert";
-
+import { LiveChatProvider } from "./LiveChatProvider";
 
 export const metadata: Metadata = {
   title: "Snazzy Fits",
@@ -21,11 +21,14 @@ export default function RootLayout({
       <body
       >
         <StoreProvider>
-          <ToastContainer />
-          <Alert />
-          {children}
+          <LiveChatProvider>
+            <ToastContainer />
+            <Alert />
+            {children}
+          </LiveChatProvider>
         </StoreProvider>
+
       </body>
-    </html>
+    </html >
   );
 }

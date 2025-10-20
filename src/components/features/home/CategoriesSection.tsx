@@ -9,19 +9,19 @@ export default function CategoriesSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6 }}
-      className="relative max-w-7xl mx-auto px-6 py-20 overflow-hidden"
+      className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 overflow-hidden"
     >
       {/* Soft Background Gradient */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-amber-100/40 to-orange-100/40 rounded-full blur-3xl opacity-50 -z-10" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-br from-cyan-100/40 to-teal-100/40 rounded-full blur-3xl opacity-50 -z-10" />
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-slate-900 mb-4">Shop by Category</h2>
-        <p className="text-gray-600 text-lg">Explore our diverse collection across all categories</p>
+      <div className="absolute top-0 right-0 w-80 sm:w-96 md:w-[600px] h-80 sm:h-96 md:h-[600px] bg-gradient-to-br from-amber-100/40 to-orange-100/40 rounded-full blur-3xl opacity-50 -z-10" />
+      <div className="absolute bottom-0 left-0 w-64 sm:w-80 md:w-[500px] h-64 sm:h-80 md:h-[500px] bg-gradient-to-br from-cyan-100/40 to-teal-100/40 rounded-full blur-3xl opacity-50 -z-10" />
+      <div className="text-center mb-8 sm:mb-12">
+        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3 sm:mb-4">Shop by Category</h2>
+        <p className="text-gray-600 text-base sm:text-lg">Explore our diverse collection across all categories</p>
       </div>
 
-      <div className="grid md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
         {/* Tops - Large Card */}
-        <Card className="md:col-span-2 p-8 bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl row-span-2 group hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+        <Card className="sm:col-span-2 p-6 sm:p-8 bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl md:row-span-2 group hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="relative z-10 flex justify-between items-start">
             <div className="flex-1 text-white">

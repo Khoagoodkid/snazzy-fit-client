@@ -16,7 +16,7 @@ export default function GoogleCallback() {
         try {
             const response = await getMe();
             dispatch(setCredentials({
-                user: response.data as User,
+                user: response.data ,
             }));
 
             dispatch(setAuthMethod({

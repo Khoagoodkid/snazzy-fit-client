@@ -9,12 +9,12 @@ export default function InstagramSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6 }}
-      className="relative bg-gradient-to-br from-amber-50/30 via-orange-50/20 to-yellow-50/30 py-20 overflow-hidden"
+      className="relative bg-gradient-to-br from-amber-50/30 via-orange-50/20 to-yellow-50/30 py-12 sm:py-16 md:py-20 overflow-hidden"
     >
       {/* Warm Gradient Blobs */}
-      <div className="absolute top-1/4 right-1/3 w-96 h-96 bg-gradient-to-br from-amber-200/30 to-orange-200/30 rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-1/4 left-1/3 w-[450px] h-[450px] bg-gradient-to-br from-yellow-200/30 to-amber-200/30 rounded-full blur-3xl opacity-40" />
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="absolute top-1/4 right-1/3 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-gradient-to-br from-amber-200/30 to-orange-200/30 rounded-full blur-3xl opacity-40" />
+      <div className="absolute bottom-1/4 left-1/3 w-80 sm:w-96 md:w-[450px] h-80 sm:h-96 md:h-[450px] bg-gradient-to-br from-yellow-200/30 to-amber-200/30 rounded-full blur-3xl opacity-40" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12">
           <span className="inline-block px-3 py-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-xs rounded-full mb-3">
             Follow Us
@@ -26,7 +26,7 @@ export default function InstagramSection() {
             Join our community and get daily style inspiration @snazzyfit
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
           {[
             'https://images.unsplash.com/photo-1483985028355-82c1d93eea48?auto=format&fit=crop&w=300&q=80',
             'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=300&q=80',

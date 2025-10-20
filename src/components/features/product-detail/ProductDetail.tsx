@@ -192,12 +192,12 @@ export default function ProductDetail() {
 
     if (!product) return null;
     return (
-        <Page className="bg-gradient-to-br from-lime-50/30 via-emerald-50/20 to-teal-50/30">
+        <Page className="bg-gradient-to-br from-cyan-50/30 via-teal-50/20 to-emerald-50/30">
             <div className="relative">
                 {/* Decorative Blobs */}
-                <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-lime-200/30 to-emerald-200/30 rounded-full blur-3xl opacity-50 -z-10" />
-                <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-emerald-200/30 to-teal-200/30 rounded-full blur-3xl opacity-50 -z-10" />
-                <div className="absolute bottom-1/4 right-1/3 w-[450px] h-[450px] bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-cyan-200/30 to-teal-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-teal-200/30 to-emerald-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute bottom-1/4 right-1/3 w-[450px] h-[450px] bg-gradient-to-br from-emerald-200/30 to-green-200/30 rounded-full blur-3xl opacity-50 -z-10" />
 
                 <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
                     <BreadcrumbComponent />
@@ -364,7 +364,7 @@ export default function ProductDetail() {
                                     <ShoppingCart className="w-4 h-4 mr-2" />
                                     Add To Cart
                                 </Button>
-                                <Button className="bg-gradient-to-r from-lime-500 to-emerald-500 hover:from-lime-600 hover:to-emerald-600 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all font-semibold" onClick={handleBuyNow}>
+                                <Button className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all font-semibold" onClick={handleBuyNow}>
                                     Buy Now
                                 </Button>
                                 <Button variant="outline" size="icon" className="w-12 h-12 border-2 border-gray-200 hover:border-emerald-500 hover:bg-emerald-50 rounded-xl transition-all">
@@ -466,7 +466,7 @@ export default function ProductDetail() {
                                 Related Products
                             </div>
                             <h2 className="text-3xl font-bold text-slate-900 mb-2">
-                                <span className="bg-gradient-to-r from-lime-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                                <span className="bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
                                     Explore Related Products
                                 </span>
                             </h2>

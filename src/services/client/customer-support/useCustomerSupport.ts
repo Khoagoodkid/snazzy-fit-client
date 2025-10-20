@@ -7,7 +7,8 @@ import {
     CreateTicketResponse,
     GetTicketByIdResponse,
     GetTicketsResponse,
-    DeleteTicketResponse
+    DeleteTicketResponse,
+    MarkTicketAsResolvedResponse
 } from "@/types/customer-support/customer-support.interface";
 
 export const useCustomerSupport = () => {
@@ -125,6 +126,32 @@ export const useCustomerSupport = () => {
         }
     }, []);
 
+    const getTicketsForAdmin = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response = await privateAxios.get<GetTicketsResponse>("/api/tickets/admin/get-all");
+            return response.data;
+        } 
+        catch (error) {
+            throw error as Error;
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    const markTicketAsResolved = useCallback(async (id: string) => {
+        setIsLoading(true);
+        try {
+            const response = await privateAxios.patch<MarkTicketAsResolvedResponse>(`/api/tickets/${id}/admin/mark-as-resolved`);
+            return response.data;
+        }
+        catch (error) {
+            throw error as Error;
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
     return {
         isLoading,
         getTickets,
@@ -132,5 +159,7 @@ export const useCustomerSupport = () => {
         getTicketById,
         updateTicket,
         deleteTicket,
+        getTicketsForAdmin,
+        markTicketAsResolved,
     }
 }

@@ -19,6 +19,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "@/lib/store"
 import { Button } from "@/components/ui/button"
 import SearchDialog from "../search-dialog/SearchDialog"
+import Link from "next/link"
 
 export default function Header() {
 
@@ -40,8 +41,8 @@ export default function Header() {
         <header className="w-full bg-white">
             <div className="max-w-screen mx-auto flex items-center justify-between px-6 py-4">
                 <div className="flex items-center gap-2">
-                    <div className="bg-green-600 text-white rounded-sm p-2 font-bold text-sm">S</div>
-                    <span className="font-bold text-lg text-green-900">SnazzyFit.</span>
+                    <div className="bg-gradient-to-r from-cyan-600 to-teal-600 text-white rounded-sm p-2 font-bold text-sm">S</div>
+                    <Link href="/" className="font-bold text-lg text-green-900">SnazzyFit.</Link>
                 </div>
                 <nav className="hidden md:flex gap-8 text-gray-700 text-md">
 

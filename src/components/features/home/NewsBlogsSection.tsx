@@ -10,13 +10,13 @@ export default function NewsBlogsSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6 }}
-      className="relative bg-gradient-to-br from-lime-50/30 via-emerald-50/20 to-teal-50/30 py-20 overflow-hidden"
+      className="relative bg-gradient-to-br from-lime-50/30 via-emerald-50/20 to-teal-50/30 py-12 sm:py-16 md:py-20 overflow-hidden"
     >
       {/* Vibrant Background Blobs */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-lime-200/30 to-emerald-200/30 rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-full blur-3xl opacity-40" />
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+      <div className="absolute top-0 left-1/4 w-80 sm:w-96 md:w-[500px] h-80 sm:h-96 md:h-[500px] bg-gradient-to-br from-lime-200/30 to-emerald-200/30 rounded-full blur-3xl opacity-40" />
+      <div className="absolute bottom-0 right-1/4 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-full blur-3xl opacity-40" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-4">
           <div>
             <span className="inline-block px-3 py-1 bg-slate-800 text-white font-bold text-xs rounded-full mb-3">News & Blogs</span>
             <h2 className="text-4xl font-bold text-slate-900">
@@ -27,7 +27,7 @@ export default function NewsBlogsSection() {
             View All Blogs <ArrowRight className="w-4 h-4 ml-2 inline" />
           </Button>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {/* Blog Post 1 */}
           <Card className="group hover:shadow-2xl transition-all duration-300 rounded-2xl overflow-hidden border-0">
             <CardContent className="p-0">

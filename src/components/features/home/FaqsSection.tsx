@@ -9,12 +9,12 @@ export default function FaqsSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6 }}
-      className="relative bg-gradient-to-br from-emerald-50/30 via-teal-50/20 to-cyan-50/30 py-20 overflow-hidden"
+      className="relative bg-gradient-to-br from-emerald-50/30 via-teal-50/20 to-cyan-50/30 py-12 sm:py-16 md:py-20 overflow-hidden"
     >
       {/* Cool Gradient Blobs */}
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-emerald-200/30 to-teal-200/30 rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-1/4 left-1/4 w-[450px] h-[450px] bg-gradient-to-br from-cyan-200/30 to-sky-200/30 rounded-full blur-3xl opacity-40" />
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="absolute top-1/4 right-1/4 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-gradient-to-br from-emerald-200/30 to-teal-200/30 rounded-full blur-3xl opacity-40" />
+      <div className="absolute bottom-1/4 left-1/4 w-80 sm:w-96 md:w-[450px] h-80 sm:h-96 md:h-[450px] bg-gradient-to-br from-cyan-200/30 to-sky-200/30 rounded-full blur-3xl opacity-40" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12">
           <span className="inline-block px-3 py-1 bg-slate-800 text-white font-bold text-xs rounded-full mb-3">
             FAQs
@@ -26,7 +26,7 @@ export default function FaqsSection() {
             Find quick answers to common questions about our products, shipping, and services
           </p>
         </div>
-        <Accordion type="single" collapsible className="space-y-4">
+        <Accordion type="multiple" className="space-y-4">
           <AccordionItem value="item-1" className="bg-white border border-gray-200 rounded-2xl px-6 shadow-lg hover:shadow-xl transition-all">
             <AccordionTrigger className="text-slate-900 font-semibold hover:text-cyan-600 transition-colors">
               What types of clothing do you offer?

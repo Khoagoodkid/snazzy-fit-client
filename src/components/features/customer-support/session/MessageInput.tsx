@@ -67,6 +67,7 @@ export default function MessageInput({ onSendMessage, isLoading = false }: Messa
             return
         }
 
+        console.log(selectedFiles)
         onSendMessage(message.trim(), selectedFiles.length > 0 ? selectedFiles : undefined)
         
         // Reset form

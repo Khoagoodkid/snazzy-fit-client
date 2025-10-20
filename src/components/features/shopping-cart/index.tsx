@@ -1,6 +1,6 @@
 "use client"
 
-import { X, Plus, Minus, Truck, CreditCard, Headphones, Trash } from "lucide-react"
+import { X, Plus, Minus, Truck, CreditCard, Headphones, Trash, ShoppingBag, Package } from "lucide-react"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import Page from "../app/Page"
 import { useCartService } from "@/services/client/cart/useCartService";
@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { handleEncodeData } from "@/utils/handleEncodeData";
 import { useRouter } from "next/navigation";
 import { getProductUrl } from "@/utils/handleGetProductUrl";
+import ProductImage from "@/components/ui/product-image";
 
 
 export default function ShoppingCartPage() {
@@ -110,114 +111,123 @@ export default function ShoppingCartPage() {
     }, [selectedItems, totalItems, subtotal, tax, total]);
 
     return (
-        <Page className="bg-gray-50">
-            {/* Page Title Section */}
-            <div className="max-w-7xl mx-auto px-6 py-12">
-                <BreadcrumbComponent />
-                <div className="text-left mb-12 mt-12">
-                    <h1 className="text-4xl font-bold text-gray-800 mb-4">Shopping Cart</h1>
+        <Page className="bg-gradient-to-br from-cyan-50/30 via-teal-50/20 to-emerald-50/30">
+            <div className="relative">
+                {/* Decorative Blobs */}
+                <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-cyan-200/30 to-teal-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-teal-200/30 to-emerald-200/30 rounded-full blur-3xl opacity-50 -z-10" />
+                <div className="absolute bottom-1/4 right-1/3 w-[450px] h-[450px] bg-gradient-to-br from-emerald-200/30 to-green-200/30 rounded-full blur-3xl opacity-50 -z-10" />
 
-                </div>
-
-                {/* Main Content */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Cart Items */}
-                    <div className="lg:col-span-2 border border-gray-300 rounded-lg px-4 h-fit">
-                        {/* Table Header */}
-                        <div className=" text-black p-4 rounded-t-lg border-b border-gray-300">
-                            <h2 className="text-lg font-bold">My Cart ({items.length})</h2>
+                {/* Page Title Section */}
+                <div className="max-w-7xl mx-auto px-6 py-12 relative z-10">
+                    <BreadcrumbComponent />
+                    <div className="text-center mb-12 mt-10">
+                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-800 to-slate-700 text-white px-4 py-2 rounded-full font-bold text-sm mb-6 shadow-lg">
+                            <ShoppingBag className="w-4 h-4" />
+                            Shopping Cart
                         </div>
+                        <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">
+                            Your <span className="bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent">Shopping Cart</span>
+                        </h1>
+                    </div>
 
+                    {/* Main Content */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* Cart Items */}
-                        <div className=" ">
-                            {items.map((item, index) => (
-                                <CartItem
-                                    key={item.id}
-                                    item={item}
-                                    index={index}
-                                    items={items}
-                                    onRemoveCart={handleRemoveCart}
-                                    onSelectItem={handleSelectItem}
-                                    isSelected={selectedItems.find((i) => i.id === item.id) ? true : false}
-                                    onRemoveSelectedItem={handleRemoveSelectedItem}
-                                    onUpdateCart={handleUpdateCart}
-                                />
-                            ))}
-                        </div>
-
-
-                    </div>
-
-                    {/* Order Summary */}
-                    <div className="lg:col-span-1">
-                        <div className="bg-gray-100 p-6 rounded-lg">
-                            <h2 className="text-xl font-bold text-gray-800 mb-6">Order Summary</h2>
-
-                            <div className="space-y-3 mb-6">
-                                <div className="flex justify-between text-gray-700">
-                                    <span>Items:</span>
-                                    <span>{totalItems}</span>
-                                </div>
-                                <div className="flex justify-between text-gray-700">
-                                    <span>Sub Total:</span>
-                                    <span>${subtotal.toFixed(2)}</span>
-                                </div>
-                                <div className="flex justify-between text-gray-700">
-                                    <span>Shipping:</span>
-                                    <span>${shipping.toFixed(2)}</span>
-                                </div>
-                                <div className="flex justify-between text-gray-700">
-                                    <span>Taxes:</span>
-                                    <span>${tax.toFixed(2)}</span>
-                                </div>
-
+                        <div className="lg:col-span-2 bg-white/80 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-xl h-fit overflow-hidden">
+                            {/* Table Header */}
+                            <div className="bg-gradient-to-r from-cyan-600 to-teal-600 text-white p-6 flex items-center gap-3">
+                                <ShoppingBag className="w-6 h-6" />
+                                <h2 className="text-xl font-bold">My Cart ({items.length})</h2>
                             </div>
 
-                            <div className="border-t border-gray-300 pt-4 mb-6">
-                                <div className="flex justify-between text-lg font-bold text-gray-800">
-                                    <span>Total:</span>
-                                    <span>${total.toFixed(2)}</span>
-                                </div>
+                            {/* Cart Items */}
+                            <div className="p-2">
+                                {items.map((item, index) => (
+                                    <CartItem
+                                        key={item.id}
+                                        item={item}
+                                        index={index}
+                                        items={items}
+                                        onRemoveCart={handleRemoveCart}
+                                        onSelectItem={handleSelectItem}
+                                        isSelected={selectedItems.find((i) => i.id === item.id) ? true : false}
+                                        onRemoveSelectedItem={handleRemoveSelectedItem}
+                                        onUpdateCart={handleUpdateCart}
+                                    />
+                                ))}
                             </div>
+                        </div>
 
-                            <Button
-                                onClick={() => {
-                                    handleCheckout()
-                                }}
-                                disabled={selectedItems.length === 0}
-                                className="w-full bg-green-600 text-white h-12 rounded-lg font-medium hover:bg-green-700">
-                                Proceed to Checkout
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+                        {/* Order Summary */}
+                        <div className="lg:col-span-1">
+                            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-gray-100 sticky top-6">
+                                <h2 className="text-2xl font-bold text-slate-900 mb-6">Order Summary</h2>
 
-                {/* Features Section */}
-                <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="text-center">
-                        <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Truck className="w-8 h-8 text-green-900" />
+                                <div className="space-y-4 mb-6">
+                                    <div className="flex justify-between text-gray-700">
+                                        <span className="font-medium">Items:</span>
+                                        <span className="font-semibold text-slate-900">{totalItems}</span>
+                                    </div>
+                                    <div className="flex justify-between text-gray-700">
+                                        <span className="font-medium">Sub Total:</span>
+                                        <span className="font-semibold text-slate-900">${subtotal.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between text-gray-700">
+                                        <span className="font-medium">Shipping:</span>
+                                        <span className="font-semibold text-slate-900">${shipping.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between text-gray-700">
+                                        <span className="font-medium">Taxes:</span>
+                                        <span className="font-semibold text-slate-900">${tax.toFixed(2)}</span>
+                                    </div>
+                                </div>
+
+                                <div className="border-t-2 border-gray-200 pt-6 mb-8">
+                                    <div className="flex justify-between text-xl font-bold text-slate-900">
+                                        <span>Total:</span>
+                                        <span className="bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">${total.toFixed(2)}</span>
+                                    </div>
+                                </div>
+
+                                <Button
+                                    onClick={() => {
+                                        handleCheckout()
+                                    }}
+                                    disabled={selectedItems.length === 0}
+                                    className="w-full bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 hover:from-cyan-700 hover:via-teal-700 hover:to-emerald-700 text-white h-14 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Proceed to Checkout
+                                </Button>
+                            </div>
                         </div>
-                        <h3 className="text-lg font-bold text-gray-800 mb-2">Free Shipping</h3>
-                        <p className="text-gray-600">Free shipping for order above $180</p>
                     </div>
-                    <div className="text-center">
-                        <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <CreditCard className="w-8 h-8 text-green-900" />
+
+                    {/* Features Section */}
+                    <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div className="group text-center bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-gray-100 hover:shadow-xl transition-all">
+                            <div className="w-20 h-20 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                                <Truck className="w-10 h-10 text-white" />
+                            </div>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">Free Shipping</h3>
+                            <p className="text-gray-600">Free shipping for order above $180</p>
                         </div>
-                        <h3 className="text-lg font-bold text-gray-800 mb-2">Flexible Payment</h3>
-                        <p className="text-gray-600">Multiple secure payment options</p>
-                    </div>
-                    <div className="text-center">
-                        <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Headphones className="w-8 h-8 text-green-900" />
+                        <div className="group text-center bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-gray-100 hover:shadow-xl transition-all">
+                            <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-green-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                                <CreditCard className="w-10 h-10 text-white" />
+                            </div>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">Flexible Payment</h3>
+                            <p className="text-gray-600">Multiple secure payment options</p>
                         </div>
-                        <h3 className="text-lg font-bold text-gray-800 mb-2">24x7 Support</h3>
-                        <p className="text-gray-600">We support online all days.</p>
+                        <div className="group text-center bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-gray-100 hover:shadow-xl transition-all">
+                            <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                                <Headphones className="w-10 h-10 text-white" />
+                            </div>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">24x7 Support</h3>
+                            <p className="text-gray-600">We support online all days.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
 
         </Page>
     )
@@ -254,53 +264,65 @@ const CartItem = ({ item, index, items, onRemoveCart, onSelectItem, isSelected, 
     }, [item.variant?.product]);
 
     return (
-        <div key={item.id} className={`relative flex flex-row gap-4 p-4 items-center justify-between ${index !== items.length - 1 ? 'border-b border-gray-200' : ''}`}>
-            <div className="flex flex-row gap-3 items-center">
+        <div key={item.id} className={`relative flex flex-row gap-4 p-5 items-center justify-between hover:bg-gradient-to-r hover:from-cyan-50/30 hover:to-teal-50/30 transition-all rounded-xl ${index !== items.length - 1 ? 'border-b border-gray-100' : ''}`}>
+            <div className="flex flex-row gap-4 items-center flex-1">
                 <div className="">
                     <Checkbox
                         checked={isSelected}
                         onCheckedChange={() => { isSelected ? onRemoveSelectedItem(item) : onSelectItem(item) }}
+                        className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-cyan-600 data-[state=checked]:to-teal-600 data-[state=checked]:border-cyan-600 w-5 h-5"
                     />
                 </div>
-                <div className="flex  gap-3">
-                    <div className="w-35 h-35 bg-gray-200 rounded-lg flex items-center justify-center">
-                        <div className="w-35 h-35 bg-gray-300 rounded"></div>
+                <div className="flex gap-4 flex-1">
+                    <div className="w-28 h-28 rounded-xl overflow-hidden flex-shrink-0 shadow-md">
+                        <ProductImage
+                            src={item.variant?.product?.mainImage || ""}
+                            alt={item.variant?.product?.name || ""}
+                            width={112}
+                            height={112}
+                            className="w-full h-full object-cover"
+                            fallbackClassName="w-full h-full bg-gradient-to-br from-cyan-100 to-teal-100"
+                        />
                     </div>
                     <div className="flex flex-col justify-between flex-1">
                         <div className="space-y-2">
-                            <h3 className="font-semibold text-gray-800 cursor-pointer hover:text-green-600"
+                            <h3 className="font-bold text-slate-900 text-lg cursor-pointer hover:text-teal-600 transition-colors"
                                 onClick={() => { handleRedirectToProduct() }}
                             >{item.variant?.product?.name}</h3>
-                            <p className="text-gray-500 text-sm">{item.variant?.product?.brand}</p>
-                            <p className="text-gray-500 text-sm">Color : <span className="font-medium text-black">{item.variant?.color}</span> | Size : <span className="font-medium text-black">{item.variant?.size}</span></p>
+                            <p className="text-gray-600 text-sm font-medium">{item.variant?.product?.brand}</p>
+                            <div className="flex items-center gap-3 text-sm">
+                                <span className="text-gray-600">Color: <span className="font-semibold text-slate-900">{item.variant?.color}</span></span>
+                                <span className="text-gray-300">|</span>
+                                <span className="text-gray-600">Size: <span className="font-semibold text-slate-900">{item.variant?.size}</span></span>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <span className="line-through text-gray-500 text-sm">${item.variant?.price.toFixed(2)}</span>
-                            <span className="text-black text-xl font-bold">${((item.variant?.price || 0) * (1 - (item.variant?.product?.discount || 0) / 100)).toFixed(2)}</span>
-                            <span className="text-red-500 text-md font-bold">{item.variant?.product?.discount}% OFF</span>
+                        <div className="flex items-center gap-3">
+                            <span className="line-through text-gray-400 text-sm">${item.variant?.price.toFixed(2)}</span>
+                            <span className="text-slate-900 text-2xl font-bold">${((item.variant?.price || 0) * (1 - (item.variant?.product?.discount || 0) / 100)).toFixed(2)}</span>
+                            <span className="bg-gradient-to-r from-cyan-600 to-teal-600 text-white px-2 py-1 rounded-full text-xs font-bold">{item.variant?.product?.discount}% OFF</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="h-full flex items-end flex-col ">
-                <div className="flex items-center  rounded w-fit">
+            <div className="h-full flex items-end flex-col gap-4">
+                <div className="flex items-center rounded-xl border-2 border-gray-200 overflow-hidden">
                     <Button
                         onClick={() => { setQuantity((prev) => prev - 1) }}
-                        className="w-9 h-9 hover:opacity-80 rounded-none"
+                        className="w-10 h-10 hover:bg-teal-50 rounded-none border-0 bg-transparent text-slate-700 hover:text-teal-600"
                     >
-                        <Minus size={14} />
+                        <Minus size={16} />
                     </Button>
-                    <span className="w-9 h-9 flex items-center justify-center border-y border-gray-300 text-black">{quantity}</span>
+                    <span className="w-12 h-10 flex items-center justify-center border-x-2 border-gray-200 text-slate-900 font-bold">{quantity}</span>
                     <Button
                         onClick={() => { setQuantity((prev) => prev + 1) }}
-                        className="w-9 h-9 hover:opacity-80 rounded-none"
+                        className="w-10 h-10 hover:bg-teal-50 rounded-none border-0 bg-transparent text-slate-700 hover:text-teal-600"
                     >
-                        <Plus size={14} />
+                        <Plus size={16} />
                     </Button>
                 </div>
                 <a
                     onClick={() => { onRemoveCart(item.id) }}
-                    className="text-gray-500 hover:text-red-500 cursor-pointer  flex items-center gap-2 "
+                    className="text-gray-500 hover:text-red-500 cursor-pointer flex items-center gap-2 font-medium transition-colors"
                 >
                     <Trash size={16} /> Remove
                 </a>

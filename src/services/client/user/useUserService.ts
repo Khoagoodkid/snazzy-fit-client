@@ -1,5 +1,5 @@
 import { privateAxios } from "@/middleware/axiosInstance";
-import { UpdatePasswordRequest, UpdatePasswordResponse, UpdateUserRequest, UpdateUserResponse } from "@/types/user/user.interface";
+import { GetAllUsersForAdminResponse, UpdatePasswordRequest, UpdatePasswordResponse, UpdateUserRequest, UpdateUserResponse } from "@/types/user/user.interface";
 import { useCallback, useState } from "react";
 
 export const useUserService = () => {
@@ -52,9 +52,23 @@ export const useUserService = () => {
         }
     }, []);
 
+    const getAllUsersForAdmin = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response = await privateAxios.get<GetAllUsersForAdminResponse>("/api/users/admin/get-all");
+            return response.data;
+        } catch (error) {
+            throw error as Error;
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }, []);
+
     return {
         isLoading,
         updateUser,
         updatePassword,
+        getAllUsersForAdmin,
     }
 }

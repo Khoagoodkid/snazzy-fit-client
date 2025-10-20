@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { useState } from "react"
 
 export default function UserAvatar({ user, className }: { user: User, className?: string }) {
-    const [error, setError] = useState(false)
+    const [error, setError] = useState(user.avatar === null || user.avatar === undefined || user.avatar === "")
     return (
         error ? (
             <div className={cn("w-full h-full bg-gray-300 rounded-full flex items-center justify-center", className)}>
