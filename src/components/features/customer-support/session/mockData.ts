@@ -108,7 +108,12 @@ export const mockTicket: Ticket = {
         id: "user-1",
         name: "John Doe",
         email: "john.doe@example.com",
-        role: "customer",
+        role: {
+            id: "role-1",
+            name: "customer",
+            created_at: new Date(Date.now() - 3600000 * 4).getTime().toString(),
+            updated_at: new Date(Date.now() - 3600000 * 2).getTime().toString()
+        },
         phone: "+1234567890",
         gender: "Male",
         provider: "email",
