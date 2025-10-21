@@ -6,7 +6,7 @@ import { useAppSelector } from "@/lib/hooks";
 import { useSessionService } from "@/services/client/session/useSessionService";
 import { toast } from "react-toastify";
 
-const socket = io("http://localhost:8001" + "/chat",
+const socket = io(BASE_URL + "/chat",
     {
         withCredentials: true,
         transports: ["websocket"],
