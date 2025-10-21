@@ -22,7 +22,7 @@ export const useLiveChat = () => {
     const { user } = useAppSelector((state) => state.auth);
     const { getAllSessionsForAdmin, getAllSessions } = useSessionService();
     const roomId = useMemo(() => {
-        return user?.role.name === "USER" ? user?.id : "ASSISTANT";
+        return user?.role?.name === "USER" ? user?.id : "ASSISTANT";
     }, [user]);
 
     useEffect(() => {
