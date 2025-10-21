@@ -29,7 +29,7 @@ export const useLiveChat = () => {
     if (!user) return;
     
     try {
-      if (user?.role.name === "USER") {
+      if (user?.role?.name === "USER") {
         const response = await getAllSessions();
         setSessions(response.data);
       } else {
@@ -39,7 +39,7 @@ export const useLiveChat = () => {
     } catch (error) {
       toast.error((error as Error).message);
     }
-  }, [user?.role.name, getAllSessionsForAdmin, getAllSessions, user]);
+  }, [user?.role?.name, getAllSessionsForAdmin, getAllSessions, user]);
 
   useEffect(() => {
     if (!user || !roomId) return;
