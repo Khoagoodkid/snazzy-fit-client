@@ -19,14 +19,31 @@ export const useLiveChat = () => {
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
   const { user } = useAppSelector((state) => state.auth);
   const { getAllSessionsForAdmin, getAllSessions } = useSessionService();
-  if (!user) {
-    return;
-  }
+  
   const roomId = useMemo(() => {
+    if (!user) return null;
     return user?.role?.name === "USER" ? user?.id : "ASSISTANT";
   }, [user]);
 
+  const handleGetSessions = useCallback(async () => {
+    if (!user) return;
+    
+    try {
+      if (user?.role.name === "USER") {
+        const response = await getAllSessions();
+        setSessions(response.data);
+      } else {
+        const response = await getAllSessionsForAdmin();
+        setSessions(response.data);
+      }
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  }, [user?.role.name, getAllSessionsForAdmin, getAllSessions, user]);
+
   useEffect(() => {
+    if (!user || !roomId) return;
+    
     if (!socket.connected) {
       socket.connect();
     }
@@ -75,20 +92,7 @@ export const useLiveChat = () => {
       socket.off("receiveMessage");
       socket.disconnect();
     };
-  }, []);
-  const handleGetSessions = useCallback(async () => {
-    try {
-      if (user?.role.name === "USER") {
-        const response = await getAllSessions();
-        setSessions(response.data);
-      } else {
-        const response = await getAllSessionsForAdmin();
-        setSessions(response.data);
-      }
-    } catch (error) {
-      toast.error((error as Error).message);
-    }
-  }, [user?.role.name, getAllSessionsForAdmin]);
+  }, [user, roomId]);
 
   const handleSendMessage = (payload: {
     content: string;
